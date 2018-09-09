@@ -3,17 +3,17 @@
  * Copyright 2012 xiangfeng
  * Released under the MIT license
  * Please contact to xiangfenglf@163.com if you hava any question 
- * ��Ϸ��Դ��
+ * ????????
  */
 (function(win){ 
-   //��Ϸ��Դ������
+   //????????????
    var _resMan = win.ResManager =
 	  {
-	     //�洢���ж������Դ����
+	     //?��???��???????????
 	     defTypes:{},
-		 //�洢������Դ
+		 //?��???????
          res:{},
-		 //ע����Դ����
+		 //??????????
          regResType:function(type,clz)
 		 {
 		   if(this.defTypes[type]==null)
@@ -21,25 +21,25 @@
 		     this.defTypes[type]={"type":type,"class":clz};
 		   }
 		 },
-         //�������ͻ�ȡ��Դ�� 
+         //??????????????? 
 		 getClass:function(type)
 		 {
 		    return this.defTypes[type]["class"];
 		 },
-         //������Դ 
+         //??????? 
 		 load:function(type,name,src,loadedFN)
 		 {
             var res = this.getClass(type).load(name,src,loadedFN);            
             this.addRes(res);
 			return res;
 		 },		
-         //�����Դ
+         //??????
 		 addRes:function(resObj)
          {
 			this.res[resObj.type]=this.res[resObj.type]||{};
 			this.res[resObj.type][resObj.name]=resObj;			
 		 },
-         //ɾ��ָ����Դ
+         //?????????
 		 removeRes:function(resObj)
 		 {
             var t = resObj.type,
@@ -50,24 +50,24 @@
 				delete this.res[t];
 			 }
 		 },
-		 //���������Դ
+		 //??????????
 		 clearRes:function()
 		 {
             this.res = {};
 		 },
-         //�������ƻ�ȡ��Դ
+         //?????????????
 		 getResByName:function(type,name)
 		 {
 		    return this.res[type][name];
 		 },
-         //��ȡ֡������Դ
+         //???????????
          getAnimationsByName:function(fResName,fName)
 	     {
 		   var obj = this.res[_frameRes.ClassName][fResName];
 		   var fm = obj.frames[fName];	
 		   return fm;	
 	     },
-         //������Դ,urlָ����Դ�����ļ�
+         //???????,url?????????????
 		 loadRes:function(url,loadedFN,perLoadedFN)
 		 {
              var self = this;
@@ -76,7 +76,7 @@
  			  self.parseRes(data,loadedFN,perLoadedFN);
 			})
 		 },
-         //������Դ
+         //???????
          parseRes:function(res,loadedFN,perLoadedFN)
          {	     
 			 var resCount = 0;
@@ -124,9 +124,9 @@
 		     });
 	     }
 	  }    
-   //ͼƬ��Դ
+   //?????
    var _imgRes = win.ImageRes = {
-	   //������Դ
+	   //???????
 	   load:function(name,url,loadedFN)
 	   {
            var img = new Image();
@@ -140,11 +140,11 @@
            return  obj;
 	   }
    };
-   //֡������Դ
+   //????????
    var _frameRes = win.FrameRes = {	   
 	   load:function(name,url,loadedFN)
 	   {
-		   //����frameJSON��ʽ�����ļ�
+		   //????frameJSON??????????
 	      function parse(animations,data)
 	      {
 			  switch(data.type)
@@ -167,7 +167,7 @@
 					  var w = data.rc[2];
 					  var h = data.rc[3];
 					  var fs = data.animations;
-					  //���������ȡȫ��
+					  //?????????????
 					  if(fs==null)
 					  {		
 						  var fs = new Frames("def",res.hEle);
@@ -204,7 +204,7 @@
 			   }
 	      }
 		   var obj = {"type":"frame","name":name,"src":url,"frames":{},"isLoaded":false};
-		   //����֡������Դ
+		   //????????????
 		   ResUtil.loadFile(url,null,function(data){
 			   obj.isLoaded = true;
                for(var i in data)
@@ -213,7 +213,7 @@
 				   {					  
 					   var f = data[i];					
 					   obj.frames[i] = new Animations();
-					   //����֡������Դ
+					   //????????????
                        parse(obj.frames[i],f);
 				   }
 			   }
@@ -222,9 +222,9 @@
            return  obj;
 	   }
    }
-   //��Ϸ������Դ
+   //??????????
    var _gCfgRes = win.GCfgRes = {
-	   //������Դ
+	   //???????
 	   load:function(name,url,loadedFN)
 	   {          
 		   var obj = {"type":"gCfg","name":name,"src":url,"data":null,"isLoaded":false};
@@ -239,7 +239,7 @@
    _imgRes.ClassName = "image";
    _frameRes.ClassName = "frame";
    _gCfgRes.ClassName = "gCfg";
-   //ע����Դ�ൽ��Դ��������
+   //???????????????????
    _resMan.regResType(_imgRes.ClassName,_imgRes);
    _resMan.regResType(_frameRes.ClassName,_frameRes);
    _resMan.regResType(_gCfgRes.ClassName,_gCfgRes);
