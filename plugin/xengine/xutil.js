@@ -3,17 +3,17 @@
  * Copyright 2012 xiangfeng
  * Released under the MIT license
  * Please contact to xiangfenglf@163.com if you hava any question 
- * xengine ¹¤¾ßÀà
+ * xengine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
  (function(win){
-   //ä¯ÀÀÆ÷¹¤¾ßÀà
+   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    var _bUtil = win.BrowseUtil = {
-       //»ñÈ¡ä¯ÀÀÆ÷ÊÊºÏµÄcssÇ°×º
+       //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÏµï¿½cssÇ°×º
 	   getPrefix4CSS:function()
 	   {
 	   }
 	 };   
-   //JSON¹¤¾ßÀà
+   //JSONï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    var _jUtil = win.JSONUtil = {
 	   isEmpty:function(obj)
 	   {
@@ -24,9 +24,9 @@
 		   return true;
 	   }
    }
-   //×ÊÔ´¹¤¾ßÀà
+   //ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    var _rUtil = win.ResUtil = {
-     loadFile:function(fileURL,type,fn,sync)
+     loadFile:function(fileURL,type,fn,sync, method)
 	 {
 		var ct = "text/xml;charset=UTF-8";
 		var dt = type||"json";
@@ -34,11 +34,12 @@
 		{
 			ct = "text/x-json;charset=UTF-8";
 		}
+         method  = method || 'GET'
 		$.ajax(
 				 {
 					  url:fileURL,
 					  async:(sync==null?false:sync),					 
-					  type:"POST",				  
+					  type: method,
 					  dataType:dt,
 					  contentType:ct,
 					  error:function()
@@ -54,7 +55,7 @@
 			  );
 	 }
    }
-   //¶ÓÁÐÀà
+   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    var _queue = win.Queue = function(cap){
 	   var _MAXDEF  = 9,
 		capacity = cap+1,
@@ -84,9 +85,9 @@
 			return result;
 		};
    }  
-   //Êý×é¹¤¾ßÀà
+   //ï¿½ï¿½ï¿½é¹¤ï¿½ï¿½ï¿½ï¿½
    var _arrUtil = win.ArrayUtil = {
-	   //ÒÆ³öarrÖÐË÷ÒýÎªidxµÄÏîÄ¿
+	   //ï¿½Æ³ï¿½arrï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªidxï¿½ï¿½ï¿½ï¿½Ä¿
 	   removeByIdx:function(arr,idx)
        {
 		  arr&&arr.splice(idx,1);        
@@ -129,7 +130,7 @@
 		   }
 	   }
    }
-   //ÊýÑ§¹¤¾ßÀà
+   //ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    var MathUtil = win.MathUtil = {
       deg2rad:function(angle)
        {
@@ -173,29 +174,29 @@
 			   rlen = 1/len;
 		   return {"x":v.x*rlen,"y":v.y*rlen};
 	   },
-      //ÅÐ¶ÏÁ½¸ö¾ØÐÎÊÇ·ñÏà½»
+      //ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½à½»
 	  isInRect:function(x1,y1,x2,y2,x3,y3,x4,y4)
 	  {
 		  if(x1>x4||x2<x3)return false;
           if(y1>y4||y2<y3)return false;
           return true;
 	  },
-      //»ñÈ¡Á½¸ö¾ØÐÎÏà½»ÇøÓò
+      //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à½»ï¿½ï¿½ï¿½ï¿½
 	  getInRect:function(x1,y1,x2,y2,x3,y3,x4,y4)
 	  {
           return [Math.max(x1,x3),Math.max(y1,y3),Math.min(x2,x4),Math.min(y2,y4)];
 	  },
-      //µãÊÇ·ñÔÚRectÖÐ
+      //ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Rectï¿½ï¿½
 	  pInRect:function(x1,y1,x2,y2,w,h)
 	  {
 		  return x1>=x2&&x1<=x2+w&&y1>=y2&&y1<=y2+h;
 	  },
-      //ÒÔÆÁÄ»ÉÏ×óÉÏ½ÇÎªÔ­µã£¬x1,y1Îª×ø±êµÄµã×ªÏòÒÔox,oyÎªÔ­µãµÄ×ø±ê
+      //ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ÎªÔ­ï¿½ã£¬x1,y1Îªï¿½ï¿½ï¿½ï¿½Äµï¿½×ªï¿½ï¿½ï¿½ï¿½ox,oyÎªÔ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	  mapSToCoord:function(x1,y1,ox,oy)
 	  {
 		  return [x1-ox,y1-oy];
 	  },
-      //¼ÆËãpolyArrÔÚaxisÉÏµÄÍ¶Ó°,polyArrÊÇÒ»ÏµÁÐµã×ø±êµÄ¼¯ºÏ,Êý×é±íÊ¾
+      //ï¿½ï¿½ï¿½ï¿½polyArrï¿½ï¿½axisï¿½Ïµï¿½Í¶Ó°,polyArrï¿½ï¿½Ò»Ïµï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 	  calcProj:function(axis,polyArr)
 	   {
           var v = {"x":polyArr[0],"y":polyArr[1]};
@@ -211,7 +212,7 @@
 		  }
 		  return [min,max];
 	   },
-       //¼ÆËãÍ¬Ò»¸öÖáÉÏÏß¶ÎµÄ¾àÀës1(min1,max1),s2(min2,max2),Èç¹û¾àÀëÐ¡ÓÚ0Ôò±íÊ¾Á½Ïß¶ÎÓÐÏà½»; 
+       //ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ÎµÄ¾ï¿½ï¿½ï¿½s1(min1,max1),s2(min2,max2),ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½0ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½à½»; 
        segDist:function(min1,max1,min2,max2)
 	   {
 		   if(min1<min2)
@@ -223,16 +224,16 @@
 			   return min1-max2;
 		   }
 	   },
-	   //ÅÐ¶ÏÁ½¸ö¶à±ßÐÎÊÇ·ñÏà½»Åö×²,p1,p2ÓÃÓÚ±£´æ¶à±ßÐÎµãµÄÊý×é
+	   //ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½à½»ï¿½ï¿½×²,p1,p2ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
        isCollide:function(p1,p2)
 	   {
-		   //¶¨Òå·¨ÏòÁ¿
+		   //ï¿½ï¿½ï¿½å·¨ï¿½ï¿½ï¿½ï¿½
 		   var e = {"x":0,"y":0};		   
 		   var p = p1,idx=0,len1=p1.length,len2=p2.length;
 		   for(var i=0,len = len1+len2;i<len-1;i+=2)
 		   {
 			   idx = i;
-			   //¼ÆËãÁ½¸ö¶à±ßÐÎÃ¿Ìõ±ß
+			   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½
 			   if(i>len1)
 			   {
 				   p=p2;
@@ -248,13 +249,13 @@
 			       px = p[idx+2]-p[idx],
 			       py = p[idx+3]-p[idx+1];
 			   }
-			   //µÃµ½±ßµÄ·¨ÏòÁ¿ 
+			   //ï¿½Ãµï¿½ï¿½ßµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			   e.x = -py;
 			   e.y = px;
-			   //¼ÆËãÁ½¸ö¶à±ßÐÎÔÚ·¨ÏòÁ¿ÉÏµÄÍ¶Ó°
+			   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Í¶Ó°
 			   var pp1 = MathUtil.calcProj(e,p1);
 			   var pp2 = MathUtil.calcProj(e,p2);
-               //¼ÆËãÁ½¸öÏß¶ÎÔÚ·¨ÏòÁ¿ÉÏ¾àÀë£¬Èç¹û´óÓÚ0Ôò¿ÉÒÔÍË³ö£¬±íÊ¾ÎÞÏà½»
+               //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¾ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½à½»
 			   if(MathUtil.segDist(pp1[0],pp1[1],pp2[0],pp2[1])>0)
 			   {
 				   return false;
@@ -263,10 +264,10 @@
 		   return true;
 	   }	   
    }
-   //µØÍ¼¹¤¾ß
+   //ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½
    var _MapUtil = win.MapUtil = 
    {
-	  //¶¨Òåµã¶ÔÏó
+	  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	  Point:function(x,y)
 	   {
            this.x = x;
@@ -275,26 +276,26 @@
 	       this.f = 0;
 	       this.g = 0;
 	       this.h=0;
-	       //µ±Ç°µã×´Ì¬£¬0£º±íÊ¾ÔÚopenlist 1:±íÊ¾closelist,-1±íÊ¾»¹Ã»´¦Àí
+	       //ï¿½ï¿½Ç°ï¿½ï¿½×´Ì¬ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½openlist 1:ï¿½ï¿½Ê¾closelist,-1ï¿½ï¿½Ê¾ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½
 	       this.state=-1;
-		   //flag±íÃ÷¸ÃµãÊÇ·ñ¿ÉÍ¨¹ý
+		   //flagï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½Ç·ï¿½ï¿½Í¨ï¿½ï¿½
 	       this.flag = 0;
 	   },
-       //²úÉúËæ»úÃÔ¹¬
+       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¹ï¿½
        primMaze:function(r,c)
        {
-		 //³õÊ¼»¯Êý×é
+		 //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		 function init(r,c)
 		 {
 			var a = new Array(2*r+1);
-			//È«²¿ÖÃ1
+			//È«ï¿½ï¿½ï¿½ï¿½1
 			for(var i=0,len=a.length;i<len;i++)
 			{
 			   var cols = 2*c+1;
 			   a[i]= new Array(cols);
 			   ArrayUtil.fillWith(a[i],1);
 			}
-			//ÖÐ¼ä¸ñ×ÓÎª0
+			//ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½Îª0
 			for(var i=0;i<r;i++)
 			 for(var j=0;j<c;j++)
 				{
@@ -302,17 +303,17 @@
 				}
 			return a;
 		 }
-		 //´¦ÀíÊý×é£¬²úÉú×îÖÕµÄÊý×é
+		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
 		 function process(arr)
 		 {
-		   //acc´æ·ÅÒÑ·ÃÎÊ¶ÓÁÐ£¬noacc´æ·ÅÃ»ÓÐ·ÃÎÊ¶ÓÁÐ
+		   //accï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½Ê¶ï¿½ï¿½Ð£ï¿½noaccï¿½ï¿½ï¿½Ã»ï¿½Ð·ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½
 		   var acc = [],noacc = [];
 		   var r = arr.length>>1,c=arr[0].length>>1;
 		   var count = r*c;
 		   for(var i=0;i<count;i++){noacc[i]=0;}
-		   //¶¨Òå¿Õµ¥ÔªÉÏÏÂ×óÓÒÆ«ÒÆ
+		   //ï¿½ï¿½ï¿½ï¿½Õµï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½
 		   var offs=[-c,c,-1,1],offR=[-1,1,0,0],offC=[0,0,-1,1];	  
-		   //Ëæ»ú´ÓnoaccÈ¡³öÒ»¸öÎ»ÖÃ
+		   //ï¿½ï¿½ï¿½ï¿½ï¿½noaccÈ¡ï¿½ï¿½Ò»ï¿½ï¿½Î»ï¿½ï¿½
 		   var pos = MathUtil.randInt(count);
 		   noacc[pos]=1;
 		   acc.push(pos);	   
@@ -320,9 +321,9 @@
 		   {	    
 			 var ls = -1,offPos = -1;
 			 offPos = -1;
-			 //ÕÒ³öposÎ»ÖÃÔÚ¶þÎ¬Êý×éÖÐµÄ×ø±ê
+			 //ï¿½Ò³ï¿½posÎ»ï¿½ï¿½ï¿½Ú¶ï¿½Î¬ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
 			 var pr = pos/c|0,pc=pos%c,co=0,o=0;
-			 //Ëæ»úÈ¡ÉÏÏÂ×óÓÒËÄ¸öµ¥Ôª
+			 //ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½Ôª
 			 while(++co<5)
 			 {
 			   o = MathUtil.randInt(0,5);
@@ -340,7 +341,7 @@
 			 {
 				pr = 2*pr+1;
 				pc = 2*pc+1;
-				//ÏàÁÚ¿Õµ¥ÔªÖÐ¼äµÄÎ»ÖÃÖÃ0
+				//ï¿½ï¿½ï¿½Ú¿Õµï¿½Ôªï¿½Ð¼ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½0
 				arr[pr+offR[offPos]][pc+offC[offPos]]=0;
 				pos = ls;  
 				noacc[pos] = 1;
@@ -352,7 +353,7 @@
 	     process(a);
 	     return a;
        },
-       //°ÑÆÕÍ¨¶þÎ¬Êý×é(È«²¿ÓÉ1£¬0±íÊ¾)µÄ×ª»»³Éa*ËùÐèÒªµÄµãÊý×é
+       //ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½(È«ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½0ï¿½ï¿½Ê¾)ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½a*ï¿½ï¿½ï¿½ï¿½Òªï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
 	   convertArrToAS:function(arr)
 	   {
 		 var r = arr.length,c=arr[0].length;
@@ -369,10 +370,10 @@
 		  }		  
 		 return a;
 	   },
-       //A*Ëã·¨,pathArr±íÊ¾×îºó·µ»ØµÄÂ·¾¶
+       //A*ï¿½ã·¨,pathArrï¿½ï¿½Ê¾ï¿½ï¿½ó·µ»Øµï¿½Â·ï¿½ï¿½
 	   findPathA:function(pathArr,start,end,row,col)
 	   {
-		//Ìí¼ÓÊý¾Ýµ½ÅÅÐòÊý×éÖÐ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         function addArrSort(descSortedArr,element,compare)
 		   {
 			  var left = 0;
@@ -402,12 +403,12 @@
 			  descSortedArr[left] = element;	 
 			  return idx;
 		   }
-		//ÅÐ¶ÏÁ½¸öµãÊÇ·ñÏàÍ¬
+		//ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í¬
 		function pEqual(p1,p2)
 		{
 			return p1.x==p2.x&&p1.y==p2.y;
 		}
-		//»ñÈ¡Á½¸öµã¾àÀë£¬²ÉÓÃÂü¹þ¶Ù·½·¨
+		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù·ï¿½ï¿½ï¿½
 		function posDist(pos,pos1)
         {
           return (Math.abs(pos1.x-pos.x)+Math.abs(pos1.y-pos.y));
@@ -416,12 +417,12 @@
         {
           return (val>=min&&val<=max)
         }
-		//±È½ÏÁ½¸öµãfÖµ´óÐ¡
+		//ï¿½È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fÖµï¿½ï¿½Ð¡
         function compPointF(pt1,pt2)
         {
          return pt1.f-pt2.f;
         }
-		//´¦Àíµ±Ç°½Úµã
+		//ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Úµï¿½
         function processCurrpoint(arr,openList,row,col,currPoint,destPoint)
 		   {
 			  //get up,down,left,right direct
@@ -467,13 +468,13 @@
 				  }
 			   return false;
 		   }
-	    //¶¨ÒåopenList
+	    //ï¿½ï¿½ï¿½ï¿½openList
 		var openList = [];
-		//¶¨ÒåcloseList
+		//ï¿½ï¿½ï¿½ï¿½closeList
 		var closeList = [];		
 		start = pathArr[start[0]][start[1]];
         end = pathArr[end[0]][end[1]];
-		//Ìí¼Ó¿ªÊ¼½Úµãµ½openList;
+		//ï¿½ï¿½Ó¿ï¿½Ê¼ï¿½Úµãµ½openList;
 		addArrSort(openList,start,compPointF);
 		var finded = false;    
 		var tcount = 0;
@@ -506,9 +507,9 @@
 		}
 	   }
    }
-   //ÑÕÉ«¹¤¾ß
+   //ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
    var ColorUtil = win.ColorUtil = {
-     //²úÉúÑÕÉ«´úÂë,r,g,bÖµÎª0~255
+     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½,r,g,bÖµÎª0~255
      rgb:function(r,g,b)
 	 {
 		var c = "#"+Number((r<<16)+(g<<8)+b).toString(16);

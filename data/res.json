@@ -1,11 +1,11 @@
 {
-  "image":
-	[		  
-	   {"name":"cm","src":"../../imgs/cm.png"},
-	   {"name":"plane","src":"../../imgs/p1.png"}       
-	], 
-  "frame":         
+	"image":
 	[
-	  {"name":"sprite","src":"data/sprite_frames.json"}
+		{"name":"Mario","src":"images/mr.png"},
+		{"name":"Bg","src":"images/grame_bg.png"}
+	],
+	"frame":
+	[
+		{"name":"sprite","src":"data/sprite_frames.json"}
 	]
 }

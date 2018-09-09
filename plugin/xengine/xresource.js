@@ -3,17 +3,17 @@
  * Copyright 2012 xiangfeng
  * Released under the MIT license
  * Please contact to xiangfenglf@163.com if you hava any question 
- * ÓÎÏ·×ÊÔ´Àà
+ * ï¿½ï¿½Ï·ï¿½ï¿½Ô´ï¿½ï¿½
  */
 (function(win){ 
-   //ÓÎÏ·×ÊÔ´¹ÜÀíÀà
+   //ï¿½ï¿½Ï·ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    var _resMan = win.ResManager =
 	  {
-	     //´æ´¢ËùÓÐ¶¨ÒåµÄ×ÊÔ´ÀàÐÍ
+	     //ï¿½æ´¢ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½
 	     defTypes:{},
-		 //´æ´¢ËùÓÐ×ÊÔ´
+		 //ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
          res:{},
-		 //×¢²á×ÊÔ´ÀàÐÍ
+		 //×¢ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½
          regResType:function(type,clz)
 		 {
 		   if(this.defTypes[type]==null)
@@ -21,25 +21,25 @@
 		     this.defTypes[type]={"type":type,"class":clz};
 		   }
 		 },
-         //¸ù¾ÝÀàÐÍ»ñÈ¡×ÊÔ´Àà 
+         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½È¡ï¿½ï¿½Ô´ï¿½ï¿½ 
 		 getClass:function(type)
 		 {
 		    return this.defTypes[type]["class"];
 		 },
-         //¼ÓÔØ×ÊÔ´ 
+         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ 
 		 load:function(type,name,src,loadedFN)
 		 {
             var res = this.getClass(type).load(name,src,loadedFN);            
             this.addRes(res);
 			return res;
 		 },		
-         //Ìí¼Ó×ÊÔ´
+         //ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
 		 addRes:function(resObj)
          {
 			this.res[resObj.type]=this.res[resObj.type]||{};
 			this.res[resObj.type][resObj.name]=resObj;			
 		 },
-         //É¾³ýÖ¸¶¨×ÊÔ´
+         //É¾ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ô´
 		 removeRes:function(resObj)
 		 {
             var t = resObj.type,
@@ -50,33 +50,33 @@
 				delete this.res[t];
 			 }
 		 },
-		 //Çå³ýËùÓÐ×ÊÔ´
+		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
 		 clearRes:function()
 		 {
             this.res = {};
 		 },
-         //¸ù¾ÝÃû³Æ»ñÈ¡×ÊÔ´
+         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ»ï¿½È¡ï¿½ï¿½Ô´
 		 getResByName:function(type,name)
 		 {
 		    return this.res[type][name];
 		 },
-         //»ñÈ¡Ö¡¶¯»­×ÊÔ´
+         //ï¿½ï¿½È¡Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
          getAnimationsByName:function(fResName,fName)
 	     {
 		   var obj = this.res[_frameRes.ClassName][fResName];
 		   var fm = obj.frames[fName];	
 		   return fm;	
 	     },
-         //¼ÓÔØ×ÊÔ´,urlÖ¸¶¨×ÊÔ´ÅäÖÃÎÄ¼þ
+         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´,urlÖ¸ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 		 loadRes:function(url,loadedFN,perLoadedFN)
 		 {
-			var self = this;
-			ResUtil.loadFile(url,null,
+             var self = this;
+			ResUtil.loadFile(url, null,
 		    function(data){
  			  self.parseRes(data,loadedFN,perLoadedFN);
 			})
 		 },
-         //½âÎö×ÊÔ´
+         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
          parseRes:function(res,loadedFN,perLoadedFN)
          {	     
 			 var resCount = 0;
@@ -124,9 +124,9 @@
 		     });
 	     }
 	  }    
-   //Í¼Æ¬×ÊÔ´
+   //Í¼Æ¬ï¿½ï¿½Ô´
    var _imgRes = win.ImageRes = {
-	   //¼ÓÔØ×ÊÔ´
+	   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
 	   load:function(name,url,loadedFN)
 	   {
            var img = new Image();
@@ -140,11 +140,11 @@
            return  obj;
 	   }
    };
-   //Ö¡¶¯»­×ÊÔ´
+   //Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
    var _frameRes = win.FrameRes = {	   
 	   load:function(name,url,loadedFN)
 	   {
-		   //½âÎöframeJSON¸ñÊ½ÅäÖÃÎÄ¼þ
+		   //ï¿½ï¿½ï¿½ï¿½frameJSONï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 	      function parse(animations,data)
 	      {
 			  switch(data.type)
@@ -167,7 +167,7 @@
 					  var w = data.rc[2];
 					  var h = data.rc[3];
 					  var fs = data.animations;
-					  //Èç¹ûºöÂÔÔòÈ¡È«²¿
+					  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡È«ï¿½ï¿½
 					  if(fs==null)
 					  {		
 						  var fs = new Frames("def",res.hEle);
@@ -204,7 +204,7 @@
 			   }
 	      }
 		   var obj = {"type":"frame","name":name,"src":url,"frames":{},"isLoaded":false};
-		   //¼ÓÔØÖ¡¶¯»­×ÊÔ´
+		   //ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
 		   ResUtil.loadFile(url,null,function(data){
 			   obj.isLoaded = true;
                for(var i in data)
@@ -213,7 +213,7 @@
 				   {					  
 					   var f = data[i];					
 					   obj.frames[i] = new Animations();
-					   //½âÎöÖ¡¶¯»­×ÊÔ´
+					   //ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
                        parse(obj.frames[i],f);
 				   }
 			   }
@@ -222,9 +222,9 @@
            return  obj;
 	   }
    }
-   //ÓÎÏ·ÅäÖÃ×ÊÔ´
+   //ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
    var _gCfgRes = win.GCfgRes = {
-	   //¼ÓÔØ×ÊÔ´
+	   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
 	   load:function(name,url,loadedFN)
 	   {          
 		   var obj = {"type":"gCfg","name":name,"src":url,"data":null,"isLoaded":false};
@@ -239,7 +239,7 @@
    _imgRes.ClassName = "image";
    _frameRes.ClassName = "frame";
    _gCfgRes.ClassName = "gCfg";
-   //×¢²á×ÊÔ´Ààµ½×ÊÔ´¹ÜÀíÆ÷ÖÐ
+   //×¢ï¿½ï¿½ï¿½ï¿½Ô´ï¿½àµ½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    _resMan.regResType(_imgRes.ClassName,_imgRes);
    _resMan.regResType(_frameRes.ClassName,_frameRes);
    _resMan.regResType(_gCfgRes.ClassName,_gCfgRes);

@@ -1,10 +1,16 @@
 {			           
-	"cm":{
+	"Bg":{
 	  "type":0,
-	  "img":"cm"
-	},	
-	"plane":{
-	  "type":0,
-	  "img":"plane"
+	  "img":"Bg"
+	},
+	"Mario":{
+	  "type":1,
+	  "img":"Mario",
+		"rc": [0, 15, 32, 32],
+		"animations": {
+			"run": [0, 3],
+			"jump": [6],
+			"crouch": [14]
+		}
 	}
 }
