@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+		<meta name="renderer" content="webkit"/> <!-- 用在360中 -->
+		<meta name="force-rendering" content="webkit"/> <!-- 用在其它 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!-- 针对 IE 浏览器 -->
+		<meta http-equiv="Cache-Control" content="no-transform"/> <!-- 针对百度搜索 -->
+		<meta name="format-detection" content="telephone=no,email=no,adress=no"/>
+		<meta content="yes" name="apple-mobile-web-app-capable"/>
+		<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+		<meta content="telephone=no" name="format-detection"/>
+		<meta content="email=no" name="format-detection"/>
+		<title></title>
+		<link rel="stylesheet" href="./css/base.css"/>
+		<link rel="stylesheet" href="./css/index.base.css"/>
+		<link rel="stylesheet" href="./css/biao.min.css"/>
+		<link rel="stylesheet" href="./plugin/iscrollUp/iscrollUp.css"/>
+		<script src="./js/adaptive.js"></script>
+	    <script>
+	        // 设计图宽度
+	        window['adaptive'].desinWidth = 750;
+	        // body 字体大小
+	        window['adaptive'].baseFont = 16;
+
+	        // 显示最大宽度
+	        window['adaptive'].maxWidth = 750;
+
+	        // 初始化
+	        window['adaptive'].init();
+	    </script>
+		<link rel="stylesheet" href="./css/style.css">
+	</head>
+	<body class="FZY4JW">
+		<div id="app">
+			<header class="header">
+				<div class="mt-20">
+					<ul class="flex flex-pack-justify">
+						<li>
+							<span class="down-font">倒计时</span>
+							<span class="down-second">50S</span>
+						</li>
+						<li>
+							<span class="getprize-font">得分</span>
+							<span class="getprize-num">5</span>
+						</li>
+					</ul>
+				</div>
+			</header>
+			<main class="main">
+				<!--马力动作序列帧-->
+				<img src="./images/mr.png" id="mr" style="display:none" /><br>
+				<div class="grame_bg _icon H100" style="display: none;">
+					<div class="h-40"></div>
+					<div class="grame_title _icon"></div>
+					<div class="mt-28">
+						<ul class="flex clearfix ">
+							<li class="flex-1 tc">
+								<div class="_icon-rule _icon "></div>
+							</li>
+							<li class="flex-1 tc">
+								<div class="_icon-sort _icon"></div>
+							</li>
+							<li class="flex-1 tc">
+								<div class="_icon-prize _icon"></div>
+							</li>
+						</ul>
+					</div>
+					<div class="mt-16">
+						<div class="grame_spirit_rabbit _icon mar-auto tran-x-3"></div>
+					</div>
+					<div class="mt-20">
+						<div class="grame_btnBg _icon mar-auto ">
+							<div class="grame_btnBg_font">开始</div>
+							<div class="grame_btnBg_font">游戏</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<div class="z-model none">
+				<div class="center2 W100 H100">
+					<div>
+						<div class="grame_rule-font _icon mar-auto"></div>
+						<div class="grame_btnBg_star _icon mar-auto mt-12">
+							<div class="grame_btnBg _icon mar-auto">
+								<div class="grame_btnBg_font fs-28-im">倒计时</div>
+								<div class="grame_btnBg_font fs-80-im pt-10">3</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="z-model none">
+				<div class="center2 W100 H100">
+					<div>
+						<div class="grame_pop">
+							<div class="h-60"></div>
+							<div class="success-title mar-auto tc">挑战成功</div>
+							<div class="getscore-font mar-auto mt-10 tc">得分： 110</div>
+							<div class="grame_spirit_rabbit-obesity _icon mar-auto"></div>
+							<div class="grame_btn-getprize _icon mar-auto mt-10"></div>
+							<div class="h-60"></div>
+						</div>
+						<div class="mt-28 tc">
+							<span class="grame_pop_close _icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="z-model none">
+				<div class="center2 W100 H100">
+					<div >
+						<div class="grame_pop">
+							<div class="h-60"></div>
+							<div class="success-title mar-auto tc">挑战失败</div>
+							<div class="getscore-font mar-auto mt-10 tc">得分： 110</div>
+							<div class="grame_spirit_rabbit-decadence _icon mar-auto"></div>
+							<div class="flex clearfix mt-20">
+								<div class="flex-1 tc">
+									<div class="grame_btn-argin _icon inline-block"></div>
+								</div>
+								<div class="flex-1 tc">
+									<div class="grame_btn-back _icon" style="display: inline-block !important;"></div>
+								</div>
+							</div>
+							<div class="h-60"></div>
+						</div>
+						<div class="mt-28 tc">
+							<span class="grame_pop_close _icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="z-model none">
+				<div class="center2 W100 H100">
+					<div>
+						<div class="grame_pop">
+							<div class="h-60"></div>
+							<div class="success-title mar-auto tc">排行榜</div>
+							<div class="h-30"></div>
+							<div>
+								<div class="sortlist-titlebox">
+									<ul class="flex">
+										<li class="flex-1 tc">
+											<span class="sortlist-title">头像</span>
+										</li>
+										<li class="flex-1 tc">
+											<span class="sortlist-title">昵称</span>
+										</li>
+										<li class="flex-1 tc">
+											<span class="sortlist-title">名次</span>
+										</li>
+									</ul>
+								</div>
+								<div class="pl-20 pr-20 relative h-600">
+									<div id="wrapper1" class="wrapper"  style="top: 0;">
+										<div  class="scroll" >
+											<div class="pullDown pullDown1">
+												<!--<span class="pullDownIcon"></span><span class="pullDownLabel"></span>-->
+											</div>
+											<ul class="thelist mp_ul thelist1"  style="height: auto; ">
+												<li class="sortlist-item clearfix tc">
+													<div class="col-xs-4 col-sm-4">
+														<div class="sortlist-headportarit"><img src="./images/headportarit.png" alt=""/></div>
+													</div>
+													<div class="col-xs-4 col-sm-4 tl one-line">
+														<span>快乐的小卡小卡 快乐的小卡 快乐的小卡</span>
+													</div>
+													<div class="col-xs-4 col-sm-4">
+														<span>1</span>
+													</div>
+												</li>
+												<li class="sortlist-item clearfix tc">
+													<div class="col-xs-4 col-sm-4">
+														<div class="sortlist-headportarit"><img src="./images/headportarit.png" alt=""/></div>
+													</div>
+													<div class="col-xs-4 col-sm-4 tl one-line">
+														<span>快乐的小卡小卡 快乐的小卡 快乐的小卡</span>
+													</div>
+													<div class="col-xs-4 col-sm-4">
+														<span>1</span>
+													</div>
+												</li>
+												<li class="sortlist-item clearfix tc">
+													<div class="col-xs-4 col-sm-4">
+														<div class="sortlist-headportarit"><img src="./images/headportarit.png" alt=""/></div>
+													</div>
+													<div class="col-xs-4 col-sm-4 tl one-line">
+														<span>快乐的小卡小卡 快乐的小卡 快乐的小卡</span>
+													</div>
+													<div class="col-xs-4 col-sm-4">
+														<span>1</span>
+													</div>
+												</li>
+												<li class="sortlist-item clearfix tc">
+													<div class="col-xs-4 col-sm-4">
+														<div class="sortlist-headportarit"><img src="./images/headportarit.png" alt=""/></div>
+													</div>
+													<div class="col-xs-4 col-sm-4 tl one-line">
+														<span>快乐的小卡小卡 快乐的小卡 快乐的小卡</span>
+													</div>
+													<div class="col-xs-4 col-sm-4">
+														<span>1</span>
+													</div>
+												</li>
+											</ul>
+											<div class="pullUp pullUp1">
+												<span class="pullUpLabel">上拉加载更多...</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="sortlist-footer-title tc">
+								您排名第 <span class="tcol-red">10</span> ，获得话费 <span class="tcol-yellor">10元</span> ，请留意稍后短信通知
+							</div>
+							<div class="grame_btn-back _icon mar-auto mt-12"></div>
+							<div class="h-60"></div>
+						</div>
+						<div class="mt-28 tc">
+							<span class="grame_pop_close _icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="z-model none">
+				<div class="center2 W100 H100">
+					<div>
+						<div class="grame_pop">
+							<div class="h-60"></div>
+							<div class="myprize-title mar-auto tc">我的奖品</div>
+							<div class="myprize-num mar-auto mt-40 tc">
+								<img class="myprize-img" src="./images/telephone-charge.png" alt=""/> X
+								<span>2</span>
+							</div>
+							<div class="myprize-font pt-56 pb-60 w-320 mar-auto">
+								1、游戏通关得5元话费
+								<br/>
+								2、排名前10得5元话费
+							</div>
+							<div class="grame_btn-back _icon mar-auto mt-10"></div>
+							<div class="h-60"></div>
+						</div>
+						<div class="mt-28 tc">
+							<span class="grame_pop_close _icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="z-model none">
+				<div class="center2 W100 H100">
+					<div>
+						<div class="grame_pop">
+							<div class="h-60"></div>
+							<div class="myprize-title mar-auto tc">活动规则</div>
+							<div class="rule-font pt-56 pb-60 w-320 mar-auto">
+								天上掉下月饼、水果、陨石，星空背景，用户控制（上下左右）月兔，碰到月饼这些得分(+5分)，碰到陨石则游戏提前结束，在规定时间内（50s）分数达到100分则挑战成功
+							</div>
+							<div class="grame_btn-back _icon mar-auto mt-10"></div>
+							<div class="h-60"></div>
+						</div>
+						<div class="mt-28 tc">
+							<span class="grame_pop_close _icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="footer"></footer>
+		</div>
+	</body>
+</html>
+<script src="plugin/jquery.min.js"></script>
+<script src="plugin/iscrollUp/iscroll.js"></script>
+<script src="plugin/iscrollUp/up.js"></script>
+		<!--导入引擎js部分-->
+<script charset='utf-8' src="./plugin/xengine/xcore.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xutil.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xevent.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xsys.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xrenderobj.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xscene.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xscenemanager.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xframes.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xsprite.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xbbox.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xresource.js"></script>
+<script charset='utf-8' src="./plugin/xengine/xapp.js"></script>
+		<!--导入游戏js部分-->
+<script src="./js/ball.js"></script>
+<script src="./js/mario.js"></script>
+<script src="./js/game.js"></script>
+<script>
+	(function (win) {
+	    /*
+	    * 	@desc: 关闭
+	    *
+	    * */
+	     function closeModel () {
+	         $('.grame_pop_close').click(function () {
+				 $(this).parents('.z-model').css('display', 'none')
+             })
+		 }
+        var _default = {
+            pullDown:  '.pullDown1',
+            pullUp: '.pullUp1',
+            wrapper: 'wrapper1',
+            thelist: '.thelist1',
+            DownCallback: function(el){
+
+            },
+            pullUpCallback:  function(el, fn){
+                var li;
+                var data = [
+                    {
+                        src: './images/headportarit.png',
+                        name: '快乐的小卡小卡 快乐的小卡 快乐的小卡',
+                        sort: "1",
+                    }
+                ]
+                setTimeout( function () {
+                    for ( var i =0, one; one = data[i++]; ) {
+                        li = document.createElement('li');
+                        var html = '<li class="sortlist-item clearfix tc">'+
+									'<div class="col-xs-4 col-sm-4">'+
+									'<div class="sortlist-headportarit"><img src="'+ one.src +'" alt=""/></div>'+
+									'</div>'+
+									'<div class="col-xs-4 col-sm-4 tl one-line">'+
+									'<span>'+one.name+'</span>'+
+								'</div>'+
+								'<div class="col-xs-4 col-sm-4">'+
+									'<span>'+one.sort+'</span>'+
+									'</div>'+
+									'</li>';
+                        li.innerHTML = html;
+                        el.appendChild(li, el.childNodes[0]);
+                    }
+                    fn && fn();
+                }, 500)
+            },
+        }
+
+        _slideUp.init(_default);
+        closeModel()
+
+	}) (window)
+</script>
