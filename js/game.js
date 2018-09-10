@@ -13,6 +13,16 @@
         state:-1,
         //后台canvas
         backBuf:null,
+        // 创建的总物体(z坠落物)数量
+        goodsNum: 0,
+        // 得分
+        score: 0,
+        // 生命值
+        hp: 100,
+        // 是否循环创建精灵
+        isLoop: false,
+        // 记录倒计时句柄
+        downTimeId: null,
         //初始化游戏
         init:function()
         {
@@ -24,9 +34,9 @@
             var width = screen.width
             var height = screen.height
             //开始场景
-            var tSC = scm.createScene([{"x":x,"w":width,"h":height,"name":"title"}]);
+            var tSC = scm.createScene([{"x":x,"w":width,"h":height,"name":"title", el: document.querySelector(".main")}]);
             //游戏场景
-            var mSC = scm.createScene([{"color":"gray","x":x,"w":width,"h":height,"name":"main"}]);
+            var mSC = scm.createScene([{"color":"gray","x":x,"w":width,"h":height,"name":"main", el: document.querySelector(".main")}]);
             this.mSC = mSC
             //创建后台canvas
             var bC = document.createElement("canvas");
@@ -34,7 +44,7 @@
             bC.height = mSC.h;
             this.backBuf = bC.getContext("2d");
             //结束场景
-            var eSC = scm.createScene([{"x":x,"w":width,"h":height,"name":"end"}]);
+            var eSC = scm.createScene([{"x":x,"w":width,"h":height,"name":"end", el: document.querySelector(".main")}]);
             //初始化所有场景
             this.initTSC(tSC);
             this.initMSC(mSC);
@@ -51,11 +61,55 @@
                     self.grameStart()
                 })
             })
+            $(".grame_btn-argin").click(function () {
+                self.reset()
+                self.showMain()
+                $(".btn-start").click()
+                self.selObj.status = 1;
+            })
+            $(".grame_btn-back").click(function () {
+                self.reset()
+                self.showMain()
+            })
+            $(".grame_btn-getprize").click(function () {
+                self.reset()
+                self.showMain()
+                $(".grame-pop-myprize").show()
+            })
+            $('.grame_pop_close').click(function () {
+                self.reset()
+                self.showMain()
+                $(this).parents('.z-model').css('display', 'none')
+            })
+        },
+        reset: function () {
+            var scm = this.sceneManager;
+            this.cObjs = []
+            this.goodsNum = 0
+            this.score = 0
+            this.hp = 100
+            $(".grame-pop-defeated").hide()
+            $(".grame-pop-success").hide()
+            $(".header-down").hide()
+            $(".grame-pop-myprize").hide()
+            $(".grame-pop-sort").hide()
+            $(".grame-pop-myprize").hide()
+            $(".grame-pop-rule").hide()
+
+            this.state = -1
+            $("#pTxt").text("Loading:"+0+"%");
+            $("#pBar").width(0 + '%');
+            console.log(this);
+            this.mSC.clearRObj()
+            this.isLoop = false
+            scm.getScene('main').clear()
         },
         countDown: function (callback) {
             var slef = this;
+            this.state = 1
             $('.grame-count-down').show()
-            var count = 3
+            var count = this.cfg.config.importTime
+            $('.grame-count-down-num').html(count)
             var countDownId = setInterval(function () {
                 $('.grame-count-down-num').html(--count)
                 if (count<=0) {
@@ -69,28 +123,71 @@
         grameStart: function () {
             var self = this
             var sc = this.sceneManager.getScene("main");
-            // 生成随机范围内的数
-            function randomFrom(lowerValue,upperValue)
-            {
-                return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
-            }
             var screenWidth = screen.width
-            var isLoop = false
-            loop()
             self.run(60);
+            $(".header-down").css('display', 'block')
+            var downCount = this.cfg.config.time
+            $('.down-second').html(downCount + 'S')
+            this.downTimeId = setInterval(function () {
+                downCount--
+                $('.down-second').html(downCount + 'S')
+                if (downCount <= 0) {
+                    self.grameStop()
+                    self.survival()
+                    downCount = 0
+                }
+            }, 1000)
+            self.isLoop = true
             function loop() {
                 self.batchCreateSprit(function (arr, arr2) {
                     arr.forEach(function (item, i) {
-                        var popx = randomFrom(-4, 4)
+                        self.goodsNum++
+                        var popx = randomFrom(-10, 10)
                         var popy = popx
-                        self.createSprit(sc, arr2[item].name, screenWidth/4 * item + popx + (self.cfg[arr2[item].name].w/4) , 0 + popy)
-                        self[arr2[item].name].dy = 1
+                        self.createSprit(sc, arr2[item].name, screenWidth/4 * item + popx + (self.cfg[arr2[item].name].w/4) , 0 + popy, function (st) {
+                            st.dy = self.cfg.config.speed
+                        })
                     })
                 })
-                isLoop = true
-                isLoop && setTimeout(function () {
-                    loop()
-                }, 2000)
+                if (self.isLoop) {
+                    console.log(self.isLoop)
+                    setTimeout(function () {
+                        loop()
+                    }, self.cfg.config.createTime)
+                }
+            }
+            loop()
+        },
+        grameStop: function () {
+          var self = this
+            self.stop()
+            self.hp = -1
+            clearInterval(self.downTimeId)
+            self.isLoop = false
+        },
+        // 挑战失败
+        grameFailed: function () {
+            var self = this;
+            $('.grame-pop-defeated').show().find('.grame-pop-score').html(self.score)
+        },
+        grameSuccess: function () {
+            var self = this;
+            $('.grame-pop-success').show().find('.grame-pop-score').html(self.score)
+        },
+        // 生命值判断
+        survival: function () {
+            var self = this
+            // 处理死亡结束
+            if (self.hp <= 0) {
+                self.grameStop()
+                self.grameFailed()
+                return false
+            }
+            // 通关
+            if (self.score >= self.cfg.config.score) {
+                self.grameStop()
+                self.grameSuccess()
+                return false
             }
         },
         //显示场景
@@ -129,6 +226,10 @@
             //增加监听器
             var ltn = new AppEventListener({
                 "afterRender":function(){
+                    // 处理得分
+                    // score
+                    $(".getprize-num").html(self.score)
+                    self.survival()
                     if(self.state>=0)
                     {
                         var sc = self.sceneManager.getCurrentScene();
@@ -154,6 +255,7 @@
                         // self.updateUI();
                     }
                 }
+
             });
             this.addListener(ltn);
         },
@@ -181,9 +283,12 @@
         //显示游戏主画面
         showMain:function()
         {
-            this.loadCfg();
-            this.showScene("main");
-            $('.grame_bg').show()
+            var self = this
+            this.loadCfg(function () {
+                self.showScene("main");
+                $('.grame_bg').show()
+            });
+
         },
         //显示成功结束
         showSuccess:function()
@@ -198,7 +303,7 @@
             this.showScene("end");
         },
         //从配置加载游戏
-        loadCfg:function()
+        loadCfg:function(callback)
         {
             var sc = this.sceneManager.getScene("main");
             this.mSC.setBGImg(this.cfg.bg.src)
@@ -206,6 +311,7 @@
             slef.state = 1
             this.createSprit(sc, 'rabbit', 300, 0, function (st) {
                 st.moveTo(screen.width/2 - st.w / 2, screen.height / 2 - st.h / 2)
+                callback && callback()
             })
         },
         batchCreateSprit: function ( callback) {
@@ -256,13 +362,15 @@
                 goodsArr2.splice(index, 1)
                 arr2.push(siteNum)
             })
-            console.log(arr)
-            console.log(arr2)
             callback && callback(arr, arr2)
         },
         createSprit: function(sc, sprit, initx, inity, callback) {
             var UpperSprit = sprit.substring(0,1).toUpperCase()+sprit.substring(1);
             var cfg = this.cfg[sprit]
+            // 按在生成的数量进行名称叠加， 防止名称一致导致只删除最后的物品；
+            if (sprit !== 'rabbit') {
+                sprit = sprit + this.goodsNum
+            }
             var st = sc.createRObj(win[UpperSprit].ClassName, [sprit])
             var obj = setSlaceWH({
                 initW: this.cfg.bg.w,
@@ -278,7 +386,9 @@
             callback && callback(st)
             var anims = ResManager.getAnimationsByName(cfg.resName, cfg.fName)
             st.setAnims(anims)
-            this[sprit] = st
+            this.mysprit = typeof this.mysprit === 'object' ? this.mysprit : {}
+            this.mysprit[sprit] = st
+            this.cObjs.push(st)
         },
         //加载关卡
         loadLevel:function()
@@ -318,16 +428,9 @@
             //复位游戏
             this.resetGame();
         },
-        //复位球
-        resetBall:function()
-        {
-            this.ball.moveTo(this.stick.x,this.stick.y-(this.stick.h+this.ball.h)*0.5-1);
-            this.ball.dx=this.ball.dy=0;
-        },
         //复位游戏状态
         resetGame:function()
         {
-            this.resetBall();
             this.state = 0;
         },
         //弹射球
@@ -443,6 +546,7 @@
                     return false
                 }
                 so.moveTo(so.ox+Mouse.gXOff(),so.oy+Mouse.gYOff());
+                _self.selObj = so
             }
         })
         Mouse.sDLG("up",function(e){

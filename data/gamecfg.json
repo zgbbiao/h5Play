@@ -1,12 +1,15 @@
 {
   "bg": { "w": 750, "h": 1334, "resName": "sprite", "fName": "bg", "src":"images/grame_bg.png"},
-  "apply": { "w": 89, "h": 103, "resName": "sprite", "fName": "apply"},
-  "stone": { "w": 110, "h": 149, "resName": "sprite", "fName": "stone"},
-  "watermelon": { "w": 103, "h": 103, "resName": "sprite", "fName": "watermelon"},
-  "wuren": { "w": 101, "h": 101, "resName": "sprite", "fName": "wuren"},
+  "apply": { "w": 89, "h": 103, "resName": "sprite", "fName": "apply", "score": 5, "hp": 0},
+  "stone": { "w": 110, "h": 149, "resName": "sprite", "fName": "stone", "score": 0, "hp": -100},
+  "watermelon": { "w": 103, "h": 103, "resName": "sprite", "fName": "watermelon", "score": 5, "hp": 0},
+  "wuren": { "w": 101, "h": 101, "resName": "sprite", "fName": "wuren", "score": 5, "hp": 0},
   "rabbit": { "w": 101, "h": 101, "resName": "sprite", "fName": "rabbit"},
   "config": {
     "time": 50,
-    "score": "100"
+    "score": "100",
+    "importTime": 3,
+    "speed": 5,
+    "createTime": 800
   }
 }

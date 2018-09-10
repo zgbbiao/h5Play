@@ -35,15 +35,17 @@
 	<body class="FZY4JW">
 		<div id="app">
 			<header class="header">
-				<div class="mt-20">
+				<div class="mt-20 header-down none">
 					<ul class="flex flex-pack-justify">
 						<li>
+							<span class="inline-block w-28"></span>
 							<span class="down-font">倒计时</span>
 							<span class="down-second">50S</span>
 						</li>
 						<li>
 							<span class="getprize-font">得分</span>
-							<span class="getprize-num">5</span>
+							<span class="getprize-num">0</span>
+							<span class="inline-block w-110"></span>
 						</li>
 					</ul>
 				</div>
@@ -51,17 +53,17 @@
 			<main class="main">
 				<!--马力动作序列帧-->
 				<div class="grame_bg _icon H100" style="display: none;">
-					<div class="h-40"></div>
+					<div class="h-80"></div>
 					<div class="grame_title _icon"></div>
 					<div class="mt-28">
 						<ul class="flex clearfix ">
-							<li class="flex-1 tc">
+							<li class="btn-grame-rule flex-1 tc">
 								<div class="_icon-rule _icon "></div>
 							</li>
-							<li class="flex-1 tc">
+							<li class="btn-grame-sort flex-1 tc">
 								<div class="_icon-sort _icon"></div>
 							</li>
-							<li class="flex-1 tc">
+							<li class="btn-grame-myprize flex-1 tc">
 								<div class="_icon-prize _icon"></div>
 							</li>
 						</ul>
@@ -90,13 +92,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="z-model none">
+			<div class="z-model none grame-pop-success">
 				<div class="center2 W100 H100">
 					<div>
 						<div class="grame_pop">
 							<div class="h-60"></div>
 							<div class="success-title mar-auto tc">挑战成功</div>
-							<div class="getscore-font mar-auto mt-10 tc">得分： 110</div>
+							<div class="getscore-font mar-auto mt-10 tc">得分： <span class="grame-pop-score">0</span></div>
 							<div class="grame_spirit_rabbit-obesity _icon mar-auto"></div>
 							<div class="grame_btn-getprize _icon mar-auto mt-10"></div>
 							<div class="h-60"></div>
@@ -107,13 +109,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="z-model none">
+			<div class="z-model none grame-pop-defeated">
 				<div class="center2 W100 H100">
 					<div >
 						<div class="grame_pop">
 							<div class="h-60"></div>
 							<div class="success-title mar-auto tc">挑战失败</div>
-							<div class="getscore-font mar-auto mt-10 tc">得分： 110</div>
+							<div class="getscore-font mar-auto mt-10 tc">得分： <span class="grame-pop-score">0</span></div>
 							<div class="grame_spirit_rabbit-decadence _icon mar-auto"></div>
 							<div class="flex clearfix mt-20">
 								<div class="flex-1 tc">
@@ -131,7 +133,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="z-model none">
+			<div class="z-model none grame-pop-sort">
 				<div class="center2 W100 H100">
 					<div>
 						<div class="grame_pop">
@@ -223,7 +225,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="z-model none">
+			<div class="z-model none grame-pop-myprize">
 				<div class="center2 W100 H100">
 					<div>
 						<div class="grame_pop">
@@ -247,7 +249,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="z-model none">
+			<div class="grame-pop-rule z-model none">
 				<div class="center2 W100 H100">
 					<div>
 						<div class="grame_pop">
@@ -296,15 +298,7 @@
 <script src="./js/game.js"></script>
 <script>
 	(function (win) {
-	    /*
-	    * 	@desc: 关闭
-	    *
-	    * */
-	     function closeModel () {
-	         $('.grame_pop_close').click(function () {
-				 $(this).parents('.z-model').css('display', 'none')
-             })
-		 }
+
         var _default = {
             pullDown:  '.pullDown1',
             pullUp: '.pullUp1',
@@ -345,8 +339,15 @@
         }
 
         _slideUp.init(_default);
-        closeModel()
-
+        $(".btn-grame-rule").click(function () {
+            $(".grame-pop-rule").show()
+        })
+        $(".btn-grame-myprize").click(function () {
+            $(".grame-pop-myprize").show()
+        })
+        $(".btn-grame-sort").click(function () {
+            $(".grame-pop-sort").show()
+        })
 	}) (window)
 </script>
 <script>

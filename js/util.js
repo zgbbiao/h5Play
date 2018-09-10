@@ -37,3 +37,9 @@ function setSlaceWH(obj) {
 function getCurrW(init, s_init, width) {
     return screen[width] / init * s_init
 }
+
+// 生成随机范围内的数
+function randomFrom(lowerValue,upperValue)
+{
+    return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
+}

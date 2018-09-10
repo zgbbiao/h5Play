@@ -2,18 +2,88 @@
     win[myName] = Sprite.extend({
         //状态0:正常 1:选中,准备拖动 2:拖动
         status: -1,
+        // 记录上传碰撞的名字，
+        preBarrierName: null,
+        collidId: null,
         //重新update
         update: function () {
             this._super()
-            if (!StickGame.selObj) {
-                StickGame.selObj = this
+
+            if (this.x < -this.w * this.scaleX /6 ) {
+                this.x = -this.w * this.scaleX /6
             }
+            if (this.x > this.owner.w - this.w * this.scaleX /2 ) {
+                this.x = this.owner.w - this.w * this.scaleX /2
+            }
+            if (this.y > this.owner.h - this.h * this.scaleY ) {
+                this.y = this.owner.h - this.h * this.scaleY
+            }
+
+            console.log(this)
+            var so = this
+            if (!StickGame.selObj) {
+                StickGame.selObj = so
+            }
+            var self = this;
+            var sc = StickGame.sceneManager.getScene("main");
+            console.log(this.collidId)
+            if (!this.collidId) {
+                this.collidId = setTimeout( function() {
+                    clearTimeout(self.collidId)
+                    self.collidId = null
+                    //检测是否和其他精灵相交
+                    var cobj = sc.rObjs;
+                    var o = null,
+                        io = null;
+                    var x1 = so.x-so.w*0.5,
+                        y1 = so.y-so.h*0.5,
+                        x2 = so.x+so.w*0.5,
+                        y2 = so.y+so.h*0.5,
+                        x3,y3,x4,y4;
+                    for(var i=0;i<cobj.length;i++)
+                    {
+                        o = cobj[i];
+                        if(o.name!=so.name)
+                        {
+                            x3 = o.x-o.w*0.5;
+                            y3 = o.y-o.h*0.5;
+                            x4 = o.x+o.w*0.5;
+                            y4 = o.y+o.h*0.5;
+                            if(MathUtil.isInRect(x1,y1,x2,y2,x3,y3,x4,y4))
+                            {
+                                io = o;
+                            }
+                        }
+                        if(o!=so&& so &&so.isCollide(o))
+                        {
+                            so.owner.removeRObj(o)
+                            if (self.preBarrierName != o.name) {
+                                for (var key in StickGame.cfg) {
+                                    var cfg = StickGame.cfg[key]
+                                    if (typeof cfg === 'object' && (cfg.score || cfg.score == 0)) {
+                                        if (o.name.indexOf(key) !== -1) {
+                                            cfg.score && (StickGame.score += cfg.score)
+                                            cfg.hp && (StickGame.hp += cfg.hp)
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            self.preBarrierName = o.name
+                            console.log("发生碰撞")
+                            return false
+                        }
+                    }
+                }, 40.6)
+            }
+
         },
         //检测是否和其他精灵碰撞
         isCollide:function(pObj)
         {
             var backBuf = StickGame.backBuf;
             if (!backBuf) return false;
+            // 先进行AABB盒包围判断， 如果碰撞， 再进行像素碰撞判断
             backBuf.clearRect(0,0,this.owner.w,this.owner.h);
             var  x1 = this.x-this.w*0.5,
                 y1 = this.y-this.h*0.5,
