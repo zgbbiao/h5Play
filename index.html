@@ -70,21 +70,21 @@
 						<div class="grame_spirit_rabbit _icon mar-auto tran-x-3"></div>
 					</div>
 					<div class="mt-20">
-						<div class="grame_btnBg _icon mar-auto ">
+						<div class="btn-start grame_btnBg _icon mar-auto ">
 							<div class="grame_btnBg_font">开始</div>
 							<div class="grame_btnBg_font">游戏</div>
 						</div>
 					</div>
 				</div>
 			</main>
-			<div class="z-model none">
+			<div class="z-model none grame-count-down">
 				<div class="center2 W100 H100">
 					<div>
 						<div class="grame_rule-font _icon mar-auto"></div>
 						<div class="grame_btnBg_star _icon mar-auto mt-12">
 							<div class="grame_btnBg _icon mar-auto">
 								<div class="grame_btnBg_font fs-28-im">倒计时</div>
-								<div class="grame_btnBg_font fs-80-im pt-10">3</div>
+								<div class="grame-count-down-num grame_btnBg_font fs-80-im pt-10">3</div>
 							</div>
 						</div>
 					</div>
@@ -286,8 +286,13 @@
 <script charset='utf-8' src="./plugin/xengine/xresource.js"></script>
 <script charset='utf-8' src="./plugin/xengine/xapp.js"></script>
 		<!--导入游戏js部分-->
-<script src="./js/ball.js"></script>
-<script src="./js/mario.js"></script>
+<script src="./js/util.js"></script>
+<script src="./js/bg.js"></script>
+<script src="./js/apply.js"></script>
+<script src="./js/rabbit.js"></script>
+<script src="./js/stone.js"></script>
+<script src="./js/watermelon.js"></script>
+<script src="./js/wuren.js"></script>
 <script src="./js/game.js"></script>
 <script>
 	(function (win) {
@@ -357,7 +362,8 @@
 	*  {
 	*  		分数： 5 || -5
 	*  		伤害： 0 || -100，
-		*  	提示：  '获得XXX'
+		*  	提示：  '获得XXX',
+		*  	生成几率： 1
 	*  }
 	* */
 </script>

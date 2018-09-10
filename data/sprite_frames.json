@@ -1,7 +1,7 @@
 {			           
-	"Bg":{
+	"bg":{
 	  "type":0,
-	  "img":"Bg"
+	  "img":"bg"
 	},
 	"Mario":{
 	  "type":1,
@@ -12,5 +12,25 @@
 			"jump": [6],
 			"crouch": [14]
 		}
+	},
+	"apply":{
+		"type":0,
+		"img":"apply"
+	},
+	"stone":{
+		"type":0,
+		"img":"stone"
+	},
+	"watermelon":{
+		"type":0,
+		"img":"watermelon"
+	},
+	"wuren":{
+		"type":0,
+		"img":"wuren"
+	},
+	"rabbit":{
+		"type":0,
+		"img":"rabbit"
 	}
 }

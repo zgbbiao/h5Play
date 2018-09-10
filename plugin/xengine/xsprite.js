@@ -102,7 +102,7 @@
        {	   	
 		   ctx.translate(this.x,this.y);
 		   var hw = 0.5*this.w;
-		   var hh = 0.5*this.h;		
+		   var hh = 0.5*this.h;
 		   var scaleX = (this.isXFlip)?-this.scaleX:this.scaleX;
            var scaleY = (this.isYFlip)?-this.scaleY:this.scaleY;
 		   if(this.deg!==0)
@@ -111,7 +111,8 @@
 			 }	
 		   ctx.scale(scaleX,scaleY);
 		   var f = this.getNextFrame();
-		   ctx.drawImage(f[0],f[1],f[2],f[3],f[4],-hw,-hh,this.w,this.h);
+           // ctx.drawImage(f[0],f[1],f[2],f[3],f[4],-hw,-hh,this.w,this.h);
+           ctx.drawImage(f[0],f[1],f[2],f[3],f[4],-0,-0,this.w,this.h);
 	   }
    });
    _sprite.ClassName = "Sprite";

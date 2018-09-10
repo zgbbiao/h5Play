@@ -2,7 +2,12 @@
 	"image":
 	[
 		{"name":"Mario","src":"images/mr.png"},
-		{"name":"Bg","src":"images/grame_bg.png"}
+		{"name":"bg","src":"images/grame_bg.png"},
+		{"name":"apply","src":"images/barrier/apply.png"},
+		{"name":"stone","src":"images/barrier/stone.png"},
+		{"name":"watermelon","src":"images/barrier/watermelon.png"},
+		{"name":"wuren","src":"images/barrier/wuren.png"},
+		{"name":"rabbit","src":"images/grame_spirit_rabbit.png"}
 	],
 	"frame":
 	[

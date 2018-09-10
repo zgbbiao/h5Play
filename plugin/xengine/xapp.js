@@ -75,8 +75,8 @@
 	       spf = (1000/fps)|0;
 	   //开启帧数跟踪
 	   FrameState.start();
-       self.tHand = setInterval(function(){         
-          //更新帧状态
+       self.tHand = setInterval(function(){
+           //更新帧状态
           FrameState.update();	
 		  if(!self.paused)
 		   {
