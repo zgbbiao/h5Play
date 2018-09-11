@@ -17,6 +17,8 @@
         backBuf:null,
         // 创建的总物体(z坠落物)数量
         goodsNum: 0,
+        // 是否开始拖动？
+        isTouch: false,
         // 得分
         score: 0,
         // 生命值
@@ -60,6 +62,7 @@
                 //开始飞奔
                 $('.grame_bg').hide()
                 self.countDown(function () {
+                    self.isTouch = true
                     self.grameStart()
                 })
             })
@@ -102,6 +105,7 @@
             this.mSC.clearRObj()
             this.isLoop = false
             scm.getScene('main').clear()
+            this.isTouch = false
         },
         countDown: function (callback) {
             var slef = this;
@@ -465,7 +469,9 @@
 
         //定义鼠标事件
         Mouse.sDLG("down",function(e){
-            getMoveScrpit()
+            if (_self.state === 1 && _self.isTouch) {
+                getMoveScrpit()
+            }
         })
         Mouse.sDLG("move",function(e){
             var sc = _self.sceneManager.getScene("main");

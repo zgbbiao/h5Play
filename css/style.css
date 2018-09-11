@@ -2,7 +2,7 @@
     /*background-image: url('../images/grame_bg.png');*/
     display: block;
     position: absolute;
-    z-index: 10;
+    z-index: 22;
     width: 100%;
 }
 /*声明 WebFont*/
@@ -269,4 +269,7 @@
 .my-progress-box{
     position:absolute;border-radius:3px;border:2px solid yellow;left:50%;top:245px;height:10px;width:80%;
     transform: translateX(-50%);
+}
+.grame-count-down{
+    z-index: 22;
 }

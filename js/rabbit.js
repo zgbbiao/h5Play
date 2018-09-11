@@ -73,14 +73,14 @@
                             var myScore = StickGame.cfg[o.initName] && StickGame.cfg[o.initName].score || 0
                             if (myScore > 0) {
                                 StickGame.createScore(o.x,o.y,{"txt": '+' + myScore,"col":"#ffc11c","f_size":34,"l_time":1000});
-                                // if (o.initName === 'boom0') {
+                                // if (o.initName === 'stone') {
+                                // StickGame.createBoom(o.x, o.y)
                                 // }
                             }
-                            // StickGame.createBoom(o.x, o.y)
                             return false
                         }
                     }
-                }, 40.6)
+                }, 20.6)
             }
         },
         //检测是否和其他精灵碰撞
