@@ -8,7 +8,6 @@
         //重新update
         update: function () {
             this._super()
-
             if (this.x < -this.w * this.scaleX /6 ) {
                 this.x = -this.w * this.scaleX /6
             }
@@ -18,15 +17,15 @@
             if (this.y > this.owner.h - this.h * this.scaleY ) {
                 this.y = this.owner.h - this.h * this.scaleY
             }
-
-            console.log(this)
+            if (this.y <  10) {
+                this.y = 10
+            }
             var so = this
             if (!StickGame.selObj) {
                 StickGame.selObj = so
             }
             var self = this;
             var sc = StickGame.sceneManager.getScene("main");
-            console.log(this.collidId)
             if (!this.collidId) {
                 this.collidId = setTimeout( function() {
                     clearTimeout(self.collidId)
@@ -71,12 +70,18 @@
                             }
                             self.preBarrierName = o.name
                             console.log("发生碰撞")
+                            var myScore = StickGame.cfg[o.initName] && StickGame.cfg[o.initName].score || 0
+                            if (myScore > 0) {
+                                StickGame.createScore(o.x,o.y,{"txt": '+' + myScore,"col":"#ffc11c","f_size":34,"l_time":1000});
+                                // if (o.initName === 'boom0') {
+                                // }
+                            }
+                            // StickGame.createBoom(o.x, o.y)
                             return false
                         }
                     }
                 }, 40.6)
             }
-
         },
         //检测是否和其他精灵碰撞
         isCollide:function(pObj)

@@ -130,13 +130,17 @@
 	   load:function(name,url,loadedFN)
 	   {
            var img = new Image();
-		   img.src=url;	
+           img.setAttribute("crossOrigin",'anonymous')
 		   var obj = {"type":"image","name":name,"hEle":img,"src":url,"isLoaded":false};
            img.onload=function()
 		   {
 		      obj.isLoaded = true;
 			  loadedFN&&loadedFN();
  		   }
+           img.onerror = function () {
+               loadedFN&&loadedFN();
+		   }
+           img.src=url + '?v=3' ;
            return  obj;
 	   }
    };

@@ -23,8 +23,8 @@ function setSlaceWH(obj) {
     return {
         w: getCurrW(obj.initW, obj.s_initW, 'width'),
         h: getCurrW(obj.initH, obj.s_initH, 'height'),
-        biliW: screen.width / obj.initW,
-        biliH: screen.height / obj.initH
+        biliW: getCreen().width / obj.initW,
+        biliH: getCreen().height / obj.initH
     }
 }
 
@@ -35,11 +35,32 @@ function setSlaceWH(obj) {
 * @params:  width: <string>  ‘width’ || 'height'
 * */
 function getCurrW(init, s_init, width) {
-    return screen[width] / init * s_init
+    return getCreen()[width] / init * s_init
 }
 
 // 生成随机范围内的数
 function randomFrom(lowerValue,upperValue)
 {
     return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
+}
+
+// 随机排序
+
+function shuffle(arr){
+    var len = arr.length;
+    for(var i = 0; i < len - 1; i++){
+        var idx = Math.floor(Math.random() * (len - i));
+        var temp = arr[idx];
+        arr[idx] = arr[len - i - 1];
+        arr[len - i -1] = temp;
+    }
+    return arr;
+}
+
+function getCreen() {
+    var mybody = $('body')
+    return {
+        width: mybody.width(),
+        height: mybody.height()
+    }
 }

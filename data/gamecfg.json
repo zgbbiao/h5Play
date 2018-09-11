@@ -1,15 +1,32 @@
 {
-  "bg": { "w": 750, "h": 1334, "resName": "sprite", "fName": "bg", "src":"images/grame_bg.png"},
-  "apply": { "w": 89, "h": 103, "resName": "sprite", "fName": "apply", "score": 5, "hp": 0},
-  "stone": { "w": 110, "h": 149, "resName": "sprite", "fName": "stone", "score": 0, "hp": -100},
-  "watermelon": { "w": 103, "h": 103, "resName": "sprite", "fName": "watermelon", "score": 5, "hp": 0},
-  "wuren": { "w": 101, "h": 101, "resName": "sprite", "fName": "wuren", "score": 5, "hp": 0},
-  "rabbit": { "w": 101, "h": 101, "resName": "sprite", "fName": "rabbit"},
+  "bg": { "w": 750, "h": 1334, "resName": "sprite", "fName": "bg", "src":"images/grame_bg.png", "share": 1},
+  "boom0": { "w": 400, "h": 50, "resName": "sprite", "fName": "boom0"},
+  "apply": { "w": 89, "h": 103, "resName": "sprite", "fName": "apply", "score": 5, "hp": 0, "share": 1},
+  "stone": { "w": 110, "h": 149, "resName": "sprite", "fName": "stone", "score": 0, "hp": -100, "share": 2},
+  "watermelon": { "w": 103, "h": 103, "resName": "sprite", "fName": "watermelon", "score": 5, "hp": 0, "share": 1},
+  "wuren": { "w": 101, "h": 101, "resName": "sprite", "fName": "wuren", "score": 5, "hp": 0, "share": 1},
+  "orange": { "w": 100, "h": 100, "resName": "sprite", "fName": "orange", "score": 5, "hp": 0, "share": 1},
+  "rabbit": { "w": 101, "h": 101, "resName": "sprite", "fName": "rabbit", "scaleX": 0.5, "scaleY": 0.5},
   "config": {
     "time": 50,
-    "score": "100",
+    "score": 100,
     "importTime": 3,
-    "speed": 5,
-    "createTime": 800
+    "createTime": 1000,
+    "jiange": {
+      "x1": -20,
+      "x2": 20,
+      "y1": -100,
+      "y2": 100
+    },
+    "scale": {
+      "num": 5,
+      "bili": 0.01
+    },
+    "dx": [-1, 1],
+    "dy": [1, 10],
+    "skewSite": {
+      "x": 0,
+      "y": -50
+    }
   }
 }

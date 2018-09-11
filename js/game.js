@@ -11,6 +11,8 @@
         rabbit:null,
         //游戏状态  -1 结束：  0 暂停，  1 开始
         state:-1,
+        // 是否被选中， 如果不是， 一直检测， 否则不检测
+        isSelectSprict: false,
         //后台canvas
         backBuf:null,
         // 创建的总物体(z坠落物)数量
@@ -31,8 +33,8 @@
             var scm = this.sceneManager;
             //创建场景
             var x = 0
-            var width = screen.width
-            var height = screen.height
+            var width = getCreen().width
+            var height = getCreen().height
             //开始场景
             var tSC = scm.createScene([{"x":x,"w":width,"h":height,"name":"title", el: document.querySelector(".main")}]);
             //游戏场景
@@ -65,7 +67,6 @@
                 self.reset()
                 self.showMain()
                 $(".btn-start").click()
-                self.selObj.status = 1;
             })
             $(".grame_btn-back").click(function () {
                 self.reset()
@@ -95,11 +96,9 @@
             $(".grame-pop-sort").hide()
             $(".grame-pop-myprize").hide()
             $(".grame-pop-rule").hide()
-
             this.state = -1
             $("#pTxt").text("Loading:"+0+"%");
             $("#pBar").width(0 + '%');
-            console.log(this);
             this.mSC.clearRObj()
             this.isLoop = false
             scm.getScene('main').clear()
@@ -123,8 +122,8 @@
         grameStart: function () {
             var self = this
             var sc = this.sceneManager.getScene("main");
-            var screenWidth = screen.width
-            self.run(60);
+            var screenWidth = getCreen().width
+            self.run(30);
             $(".header-down").css('display', 'block')
             var downCount = this.cfg.config.time
             $('.down-second').html(downCount + 'S')
@@ -142,15 +141,15 @@
                 self.batchCreateSprit(function (arr, arr2) {
                     arr.forEach(function (item, i) {
                         self.goodsNum++
-                        var popx = randomFrom(-10, 10)
-                        var popy = popx
-                        self.createSprit(sc, arr2[item].name, screenWidth/4 * item + popx + (self.cfg[arr2[item].name].w/4) , 0 + popy, function (st) {
-                            st.dy = self.cfg.config.speed
+                        var popx = randomFrom(self.cfg.config.jiange.x1, self.cfg.config.jiange.x2)
+                        var popy = randomFrom(self.cfg.config.jiange.y1, self.cfg.config.jiange.y2)
+                        self.createSprit(sc, arr2[item].name, screenWidth/4 * item + popx + (self.cfg[arr2[item].name].w/4) + self.cfg.config.skewSite.x , 0 + popy + self.cfg.config.skewSite.y, function (st) {
+                            st.dy = MathUtil.randInt(self.cfg.config.dy[0], self.cfg.config.dy[1]);
+                            st.dx = MathUtil.randInt(self.cfg.config.dx[0], self.cfg.config.dx[1]);
                         })
                     })
                 })
                 if (self.isLoop) {
-                    console.log(self.isLoop)
                     setTimeout(function () {
                         loop()
                     }, self.cfg.config.createTime)
@@ -180,13 +179,14 @@
             // 处理死亡结束
             if (self.hp <= 0) {
                 self.grameStop()
-                self.grameFailed()
-                return false
-            }
-            // 通关
-            if (self.score >= self.cfg.config.score) {
-                self.grameStop()
-                self.grameSuccess()
+                // 通关
+                if (self.score >= self.cfg.config.score) {
+                    self.grameSuccess()
+                    return false
+                } else {
+                    self.grameFailed()
+                }
+
                 return false
             }
         },
@@ -227,33 +227,12 @@
             var ltn = new AppEventListener({
                 "afterRender":function(){
                     // 处理得分
-                    // score
                     $(".getprize-num").html(self.score)
-                    self.survival()
-                    if(self.state>=0)
-                    {
-                        var sc = self.sceneManager.getCurrentScene();
-                        // //处理游戏过关
-                        // if(self.cfg.blockNum==0)
-                        // {
-                        //     if(self.cfg.level==self.cfg.maxLev)
-                        //     {
-                        //         self.showSuccess();
-                        //     }
-                        //     else
-                        //     {
-                        //         ++self.cfg.level;
-                        //         self.loadLevel();
-                        //     }
-                        // }
-                        // //处理游戏结束
-                        // if(self.cfg.life==0)
-                        // {
-                        //     self.showGameover();
-                        // }
-                        // //更新UI;
-                        // self.updateUI();
+                    if (self.cfg.config.scale.bili * self.score > 0) {
+                        self.selObj.scaleX =  self.selObj.initScaleX + (self.cfg.config.scale.bili * self.score / self.cfg.config.scale.num)
+                        self.selObj.scaleY =  self.selObj.initScaleY + (self.cfg.config.scale.bili * self.score / self.cfg.config.scale.num)
                     }
+                    self.survival()
                 }
 
             });
@@ -281,12 +260,13 @@
                 });
         },
         //显示游戏主画面
-        showMain:function()
+        showMain:function(callback)
         {
             var self = this
             this.loadCfg(function () {
                 self.showScene("main");
                 $('.grame_bg').show()
+                callback && typeof callback === 'function' && callback()
             });
 
         },
@@ -310,11 +290,12 @@
             var slef = this;
             slef.state = 1
             this.createSprit(sc, 'rabbit', 300, 0, function (st) {
-                st.moveTo(screen.width/2 - st.w / 2, screen.height / 2 - st.h / 2)
+                st.moveTo(getCreen().width/2 - st.w / 2, getCreen().height / 2 - st.h / 2)
                 callback && callback()
             })
         },
         batchCreateSprit: function ( callback) {
+            var self = this
           /*
           *  整理：
           *  生成两个数组
@@ -326,48 +307,69 @@
           var initSite = [0, 1, 2, 3]
           var siteArr = [] // 位置组
           var goodsArr = [] //物品组
-            goodsArr.push({
+
+            function addGoods (num, obj) {
+                for (var i = 0; i < num; i++) {
+                    goodsArr.push(obj)
+                }
+            }
+
+            addGoods(self.cfg.watermelon.share, {
                 name: 'watermelon',
                 zhName: '西瓜'
             })
-            goodsArr.push({
-                name: 'stone',
+            addGoods(self.cfg.apply.share, {
+                name: 'apply',
                 zhName: '苹果'
             })
-            goodsArr.push({
-                name: 'apply',
+            addGoods(self.cfg.stone.share, {
+                name: 'stone',
                 zhName: '石头'
             })
-            goodsArr.push({
+            addGoods(self.cfg.wuren.share, {
                 name: 'wuren',
                 zhName: '月饼'
             })
-
-            var initSite2 = [].concat(initSite)  // 复制位置组
-            var arr = [] // 结果位置组
-            // 随机拿出初始化位置的数组
-            initSite.forEach(function (item, i) {
-                var index = Math.floor(Math.random() * initSite2.length)
-                var siteNum = initSite2[index]
-                initSite2.splice(index, 1)
-                arr.push(siteNum)
+            addGoods(self.cfg.orange.share, {
+                name: 'orange',
+                zhName: '橘子'
             })
-
-            var goodsArr2 = [].concat(goodsArr)
-            var arr2 = [] // 结果物品组
-            // 随机拿出初始化物品的数组
-            goodsArr.forEach(function (item, i) {
-                var index = Math.floor(Math.random() * goodsArr2.length)
-                var siteNum = goodsArr2[index]
-                goodsArr2.splice(index, 1)
-                arr2.push(siteNum)
-            })
-            callback && callback(arr, arr2)
+            goodsArr = shuffle(goodsArr)
+            // var initSite2 = [].concat(initSite)  // 复制位置组
+            // var arr = [] // 结果位置组
+            // // 随机拿出初始化位置的数组
+            // initSite.forEach(function (item, i) {
+            //     var index = Math.floor(Math.random() * initSite2.length)
+            //     var siteNum = initSite2[index]
+            //     initSite2.splice(index, 1)
+            //     arr.push(siteNum)
+            // })
+            //
+            // var goodsArr2 = [].concat(goodsArr)
+            // var arr2 = [] // 结果物品组
+            // // 随机拿出初始化物品的数组
+            // goodsArr.forEach(function (item, i) {
+            //     var index = Math.floor(Math.random() * goodsArr2.length)
+            //     var siteNum = goodsArr2[index]
+            //     goodsArr2.splice(index, 1)
+            //     arr2.push(siteNum)
+            // })
+            // console.log(arr2)
+            callback && callback(initSite, goodsArr.slice(0, 4))
         },
+        /*
+        * @desc: 绘制精灵
+        * @params: sc  场景
+        * @params: sprit: 精灵名称
+        * @params: initx: 初始位置
+        * @params: inity: 初始位置
+        * @params: callback  回调函数
+        * */
         createSprit: function(sc, sprit, initx, inity, callback) {
             var UpperSprit = sprit.substring(0,1).toUpperCase()+sprit.substring(1);
             var cfg = this.cfg[sprit]
             // 按在生成的数量进行名称叠加， 防止名称一致导致只删除最后的物品；
+            var initSpritName = sprit
             if (sprit !== 'rabbit') {
                 sprit = sprit + this.goodsNum
             }
@@ -378,10 +380,17 @@
                 s_initW: cfg.w,
                 s_initH: cfg.h
             })
+            st.initName = initSpritName
             st.w = cfg.w
             st.h = cfg.h
-            st.scaleX = obj.biliW
-            st.scaleY = obj.biliH
+            var scaleXNum = 1
+            var scaleYNum = 1
+            scaleXNum = cfg.scaleX || scaleXNum
+            scaleYNum = cfg.scaleY || scaleYNum
+            st.scaleX = obj.biliW * scaleXNum
+            st.scaleY = obj.biliH * scaleYNum
+            st.initScaleX = obj.biliW * scaleXNum
+            st.initScaleY = obj.biliH * scaleYNum
             st.moveTo(initx, inity)
             callback && callback(st)
             var anims = ResManager.getAnimationsByName(cfg.resName, cfg.fName)
@@ -390,113 +399,34 @@
             this.mysprit[sprit] = st
             this.cObjs.push(st)
         },
-        //加载关卡
-        loadLevel:function()
+        //创建分数文本
+        createScore:function(x,y,param)
+        {
+            var p = PubUtil.merge(param,{"x":x,"y":y,"txt":0,"col":"red","f_size":30,"l_time":800});
+            var sc = this.sceneManager.getScene("main");
+            var sprit = 'acoretext'
+            var UpperSprit = sprit.substring(0,1).toUpperCase()+sprit.substring(1);
+            var tObj = sc.createRObj(win[UpperSprit].ClassName);
+            tObj.birth = FrameState.currTime;
+            tObj.life = p.l_time;
+            tObj.col = p.col;
+            tObj.txt = p.txt;
+            tObj.size = p.f_size;
+            tObj.x = x;
+            tObj.y = y;
+            tObj.tAlpha = 1.0;
+            tObj.dy = -1;
+        },
+        //创建爆炸精灵
+        createBoom:function(x,y,callback)
         {
             var self = this
-            sc = this.sceneManager.getScene("main");
-            //根据配置数据创建砖块
-            function createBlock(sc)
-            {
-                //获取当前级别
-                var lev = self.cfg.level,
-                    cfg = self.cfg["lev"+lev],
-                    bcfg = self.cfg.block;
-                //获取砖块动画序列资源
-                var anims = ResManager.getAnimationsByName(bcfg.resName,bcfg.fName);
-                var bOffY = 60;
-                for(var i=0;i<cfg.length;i++)
-                {
-                    for(var j=0;j<cfg[i].length;j++)
-                    {
-                        var bData = cfg[i][j];
-                        if(bData>0)
-                        {
-                            var bk =  sc.createRObj(Block.ClassName);
-                            bk.setAnims(anims,"s"+bData);
-                            bk.lev = bData;
-                            bk.w = bcfg.w;
-                            bk.h = bcfg.h;
-                            bk.moveTo(j*bk.w+(bk.w*0.5),bOffY+i*bk.h);
-                            ++self.cfg.blockNum;
-                        }
-                    }
-                }
-            }
-            //创建砖块
-            createBlock(sc);
-            //复位游戏
-            this.resetGame();
+            var sc = this.sceneManager.getScene("main");
+            this.createSprit(sc, 'boom0', 0, 0, function (st) {
+                st.moveTo(x, y)
+                callback && callback()
+            })
         },
-        //复位游戏状态
-        resetGame:function()
-        {
-            this.state = 0;
-        },
-        //弹射球
-        launchBall:function()
-        {
-            this.ball.dx = 5;
-            this.ball.dy = -5;
-            this.state = 1;
-        },
-        //触发游戏中产生的事件
-        fireEvent:function(e)
-        {
-            e.exec();
-        },
-        //更新分数
-        updateScore:function()
-        {
-            $("#pScTxt").text("Score:"+this.cfg.score);
-        },
-        //更新级别
-        updateLevel:function()
-        {
-            $("#pLevTxt").text("Level:"+this.cfg.level);
-        },
-        //更新命
-        updateLife:function()
-        {
-            $("#pLifeTxt").text("Life:"+this.cfg.life);
-        },
-        //更新UI
-        updateUI:function()
-        {
-            this.updateScore();
-            this.updateLevel();
-            this.updateLife();
-        },
-        //处理碰撞砖块事件
-        doBlockCollide:function(sender)
-        {
-            var sc = sender.owner;
-            this.cfg.score+=sender.getScore();
-            //小球反弹
-            this.ball.dy = -this.ball.dy;
-            if(sender.canRelease())
-            {
-                sc.removeRObj(sender);
-                --this.cfg.blockNum;
-            }
-            else
-            {
-                sender.updateAnim();
-            }
-        },
-        //处理碰撞档板事件
-        doStickCollide:function(sender)
-        {
-            //小球反弹
-            this.ball.dy = -this.ball.dy;
-            this.ball.dx+=MathUtil.randInt(-1,2);
-        },
-        //处理球没接到事件
-        doLose:function(sender)
-        {
-            --this.cfg.life;
-            this.resetGame();
-        }
     });
     //定义全局StickGame
     win.StickGame = new _stickGame();
@@ -521,6 +451,7 @@
                 if(MathUtil.pInRect(cd[0],cd[1],o.x-o.w*0.5,o.y-o.h*0.5,o.w,o.h))
                 {
                     _self.selObj = cobj[i];
+                    _self.isSelectSprict = true
                     break;
                 }
             }
@@ -541,12 +472,14 @@
             if(_self.selObj!=null&&_self.selObj.status==1)
             {
                 var so = _self.selObj;
-                if (so && so.name !== 'rabbit') {
+                if (_self.selObj && _self.selObj.name !== 'rabbit') {
                     getMoveScrpit()
                     return false
                 }
-                so.moveTo(so.ox+Mouse.gXOff(),so.oy+Mouse.gYOff());
-                _self.selObj = so
+                if (!_self.isSelectSprict) {
+                    getMoveScrpit()
+                }
+                _self.selObj.moveTo(_self.selObj.ox+Mouse.gXOff(),_self.selObj.oy+Mouse.gYOff());
             }
         })
         Mouse.sDLG("up",function(e){
@@ -554,6 +487,7 @@
             {
                 _self.selObj.status = 0;
             }
+            _self.isSelectSprict = false
         });
     }
     addEvent()

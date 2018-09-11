@@ -30,7 +30,7 @@
 	        // 初始化
 	        window['adaptive'].init();
 	    </script>
-		<link rel="stylesheet" href="./css/style.css">
+		<link rel="stylesheet" href="./css/style.css"/>
 	</head>
 	<body class="FZY4JW">
 		<div id="app">
@@ -53,7 +53,7 @@
 			<main class="main">
 				<!--马力动作序列帧-->
 				<div class="grame_bg _icon H100" style="display: none;">
-					<div class="h-80"></div>
+					<div class="h-30"></div>
 					<div class="grame_title _icon"></div>
 					<div class="mt-28">
 						<ul class="flex clearfix ">
@@ -290,7 +290,10 @@
 		<!--导入游戏js部分-->
 <script src="./js/util.js"></script>
 <script src="./js/bg.js"></script>
+<script src="./js/boom0.js"></script>
+<script src="./js/createtext.js"></script>
 <script src="./js/apply.js"></script>
+<script src="./js/orange.js"></script>
 <script src="./js/rabbit.js"></script>
 <script src="./js/stone.js"></script>
 <script src="./js/watermelon.js"></script>
@@ -367,4 +370,65 @@
 		*  	生成几率： 1
 	*  }
 	* */
+
+
+	/*说明*/
+	/*
+	*
+	*
+	resName：  依赖的动画名称
+	fName：  依赖的动画的类名
+	src：  图片路径
+	w： 图片宽度
+	h： 图片高度
+	score： 可得分数
+	share: 物品的随机几率（份额）
+	hp： 生命值
+	scaleX： 按照生成后的图片再次进行缩放X
+	scaleY： 按照生成后的图片再次进行缩放Y
+	config： 配置资源
+	config.time： 游戏总时长
+	config.score： 通关分数
+	config.importTime： 引导时间
+	config.createTime： 生成物品的时间
+	config.jiange： 生成物品的xy间隔随机区间
+	config.scale： 图形的缩放比例
+	config.scale.num： 按照Num进行缩放
+	config.scale.bili： 按照Num进行缩放的比例  例如 总分数/num * bili
+	config.dx： 物品移动的速度X区间
+	config.dy： 物品移动的速度Y区间
+	skewSite: 初始偏移距离
+	{
+  "bg": { "w": 750, "h": 1334, "resName": "sprite", "fName": "bg", "src":"images/grame_bg.png"},
+  "apply": { "w": 89, "h": 103, "resName": "sprite", "fName": "apply", "score": 5, "hp": 0},
+  "stone": { "w": 110, "h": 149, "resName": "sprite", "fName": "stone", "score": 0, "hp": -100},
+  "watermelon": { "w": 103, "h": 103, "resName": "sprite", "fName": "watermelon", "score": 5, "hp": 0},
+  "wuren": { "w": 101, "h": 101, "resName": "sprite", "fName": "wuren", "score": 5, "hp": 0},
+  "rabbit": { "w": 101, "h": 101, "resName": "sprite", "fName": "rabbit", "scaleX": 0.5, "scaleY": 0.5},
+  "config": {
+    "time": 50,
+    "score": 10,
+    "importTime": 3,
+    "speed": 5,
+    "createTime": 1000,
+    "jiange": {
+      "x1": -20,
+      "x2": 20,
+      "y1": -100,
+      "y2": 100
+    },
+    "scale": {
+      "num": 5,
+      "bili": 0.01
+    },
+  	"dx": [-1, 1],
+    "dy": [-1, 1],
+	"skewSite": {
+      "x": 0,
+      "y": -50
+    }
+  }
+}
+
+	*/
 </script>

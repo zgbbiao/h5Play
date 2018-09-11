@@ -32,5 +32,17 @@
 	"rabbit":{
 		"type":0,
 		"img":"rabbit"
+	},
+	"orange":{
+		"type":0,
+		"img":"orange"
+	},
+	"boom0":{
+		"type":1,
+		"img":"boom0",
+		"rc":[1,8,50,50],
+		"animations":{
+			"def":[0,7]
+		}
 	}
 }
