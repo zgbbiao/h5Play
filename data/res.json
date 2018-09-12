@@ -1,15 +1,15 @@
 {
 	"image":
 	[
-		{"name":"Mario","src":"images/mr.png"},
-		{"name":"bg","src":"images/grame_bg.png"},
-		{"name":"apply","src":"images/barrier/apply.png"},
-		{"name":"stone","src":"images/barrier/stone.png"},
-		{"name":"watermelon","src":"images/barrier/watermelon.png"},
-		{"name":"wuren","src":"images/barrier/wuren.png"},
-		{"name":"orange","src":"images/barrier/orange.png"},
-		{"name":"rabbit","src":"images/grame_spirit_rabbit.png"},
-		{"name":"boom0","src":"images/boom0.png"}
+		{"name":"Mario","src":"./images/mr.png"},
+		{"name":"bg","src":"./images/grame_bg.png"},
+		{"name":"apply","src":"./images/barrier/apply.png"},
+		{"name":"stone","src":"./images/barrier/stone.png"},
+		{"name":"watermelon","src":"./images/barrier/watermelon.png"},
+		{"name":"wuren","src":"./images/barrier/wuren.png"},
+		{"name":"orange","src":"./images/barrier/orange.png"},
+		{"name":"rabbit","src":"./images/grame_spirit_rabbit.png"},
+		{"name":"boom0","src":"./images/boom0.png"}
 	],
 	"frame":
 	[

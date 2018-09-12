@@ -56,6 +56,7 @@
                         if(o!=so&& so &&so.isCollide(o))
                         {
                             so.owner.removeRObj(o)
+                            // 统计分数
                             if (self.preBarrierName != o.name) {
                                 for (var key in StickGame.cfg) {
                                     var cfg = StickGame.cfg[key]
@@ -74,7 +75,7 @@
                             if (myScore > 0) {
                                 StickGame.createScore(o.x,o.y,{"txt": '+' + myScore,"col":"#ffc11c","f_size":34,"l_time":1000});
                                 // if (o.initName === 'stone') {
-                                // StickGame.createBoom(o.x, o.y)
+                                StickGame.createBoom(o.x, o.y)
                                 // }
                             }
                             return false
@@ -90,7 +91,15 @@
             if (!backBuf) return false;
             // 先进行AABB盒包围判断， 如果碰撞， 再进行像素碰撞判断
             backBuf.clearRect(0,0,this.owner.w,this.owner.h);
-            var  x1 = this.x-this.w*0.5,
+            // var  x1 = this.x-this.w*0.5,
+            //     y1 = this.y-this.h*0.5,
+            //     x2 = this.x+this.w*0.5,
+            //     y2 = this.y+this.h*0.5,
+            //     x3 = pObj.x-pObj.w*0.5,
+            //     y3 = pObj.y-pObj.h*0.5,
+            //     x4 = pObj.x+pObj.w*0.5,
+            //     y4 = pObj.y+pObj.h*0.5;
+            var  x1 = this.x-this.w*0.5 > 0 ? this.x-this.w*0.5 : this.x,
                 y1 = this.y-this.h*0.5,
                 x2 = this.x+this.w*0.5,
                 y2 = this.y+this.h*0.5,
@@ -99,9 +108,16 @@
                 x4 = pObj.x+pObj.w*0.5,
                 y4 = pObj.y+pObj.h*0.5;
             //获取相交区域
-            var rc = MathUtil.getInRect(x1,y1,x2,y2,x3,y3,x4,y4);
+            // var rc = MathUtil.getInRect(x1,y1,x2,y2,x3,y3,x4,y4);
+            var dx = this.x-pObj.x,
+                dy = this.y-pObj.y,
+                dr = this.w/2+pObj.w/2;
             //如果没有相交则退出
-            if(rc[0]>=rc[2]||rc[1]>=rc[3])
+            // if(rc[0]>=rc[2]||rc[1]>=rc[3])
+            // {
+            //     return false;
+            // }
+            if(dx * dx + dy * dy > dr * dr)
             {
                 return false;
             }
@@ -112,6 +128,7 @@
                 //绘制到后台缓冲中
                 this.render(backBuf);
                 backBuf.restore();
+                var rc = MathUtil.getInRect(x1,y1,x2,y2,x3,y3,x4,y4);
                 //获取精灵在相交矩形像素数据
                 gData1 = backBuf.getImageData(rc[0],rc[1],rc[2],rc[3]).data;
                 //绘制目标精灵

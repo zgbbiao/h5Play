@@ -1,5 +1,5 @@
 {
-  "bg": { "w": 750, "h": 1334, "resName": "sprite", "fName": "bg", "src":"images/grame_bg.png", "share": 1},
+  "bg": { "w": 750, "h": 1334, "resName": "sprite", "fName": "bg", "src":"./images/grame_bg.png", "share": 1},
   "boom0": { "w": 400, "h": 50, "resName": "sprite", "fName": "boom0"},
   "apply": { "w": 89, "h": 103, "resName": "sprite", "fName": "apply", "score": 5, "hp": 0, "share": 1},
   "stone": { "w": 110, "h": 149, "resName": "sprite", "fName": "stone", "score": 0, "hp": -100, "share": 2},

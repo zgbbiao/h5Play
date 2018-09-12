@@ -3,6 +3,7 @@
         init: function (name) {
           this._super(name)
             this.animsId = null
+            this.speed = 1
         },
         //重新update
         update: function () {
@@ -11,15 +12,17 @@
             this._super()
             if(this.animsCtrl.isLastFrame())
             {
+                this.canRemove = true
                 this.owner.removeRObj(this);
             }
-            if (!this.animsId) {
-                var self = this
-                this.animsId = setTimeout(function () {
-                    self.owner.removeRObj(self);
-                    this.animsId = null
-                }, 100)
-            }
+            // if (!this.animsId) {
+            //     var self = this
+            //     this.animsId = setTimeout(function () {
+            //         self.removeAnim(self.name)
+            //         self.owner.removeRObj(self);
+            //         this.animsId = null
+            //     }, 100)
+            // }
         }
     })
     win[myName].ClassName = myName;
