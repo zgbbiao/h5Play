@@ -233,8 +233,18 @@
                     // 处理得分
                     $(".getprize-num").html(self.score)
                     if (self.cfg.config.scale.bili * self.score > 0) {
-                        self.selObj.scaleX =  self.selObj.initScaleX + (self.cfg.config.scale.bili * self.score / self.cfg.config.scale.num)
-                        self.selObj.scaleY =  self.selObj.initScaleY + (self.cfg.config.scale.bili * self.score / self.cfg.config.scale.num)
+                        // 修改 从设置比例扩大 修改为修改图片的宽度  start
+                       var sx =  self.selObj.initScaleX + (self.cfg.config.scale.bili * self.score / self.cfg.config.scale.num)
+                        var sy =  self.selObj.initScaleY + (self.cfg.config.scale.bili * self.score / self.cfg.config.scale.num)
+                        if (!self.selObj.initW) {
+                            self.selObj.initW = self.selObj.w
+                        }
+                        if (!self.selObj.initH) {
+                            self.selObj.initH = self.selObj.h
+                        }
+                        self.selObj.w = (sx + 1 ) * self.selObj.initW
+                        self.selObj.h = (sy + 1 ) * self.selObj.initH
+                        // 修改 从设置比例扩大 修改为修改图片的宽度  end
                     }
                     self.survival()
                 }
@@ -272,7 +282,6 @@
                 $('.grame_bg').show()
                 callback && typeof callback === 'function' && callback()
             });
-
         },
         //显示成功结束
         showSuccess:function()
@@ -448,23 +457,19 @@
             //转换鼠标坐标到游戏窗口坐标系
             var cd = MathUtil.mapSToCoord(mx,my,gx,gy);
             var cobj = sc.rObjs;
-            var o = null;
-            for(var i=0;i<cobj.length;i++)
-            {
-                o = cobj[i];
-                if(MathUtil.pInRect(cd[0],cd[1],o.x-o.w*0.5,o.y-o.h*0.5,o.w,o.h))
+            // 修改--  修改验证规则
+            var o = _self.selObj;
+            var www = o.w * (o.scaleX > 1 ? o.scaleX : 1)
+            var hhh = o.h * (o.scaleY > 1 ? o.scaleX : 1)
+                if(MathUtil.pInRect(cd[0],cd[1],o.x-www*0.5,o.y-hhh*0.5,www,hhh))
                 {
-                    _self.selObj = cobj[i];
+                    _self.selObj.c = 'red'
                     _self.isSelectSprict = true
-                    break;
+                    _self.selObj.ox = _self.selObj.x;
+                    _self.selObj.oy = _self.selObj.y;
+                    _self.selObj.status = 1;
                 }
-            }
-            if(_self.selObj!=null)
-            {
-                _self.selObj.ox = _self.selObj.x;
-                _self.selObj.oy = _self.selObj.y;
-                _self.selObj.status = 1;
-            }
+
         }
 
         //定义鼠标事件
@@ -477,21 +482,40 @@
             var sc = _self.sceneManager.getScene("main");
             if(_self.selObj!=null&&_self.selObj.status==1)
             {
+
                 var so = _self.selObj;
                 if (_self.selObj && _self.selObj.name !== 'rabbit') {
                     getMoveScrpit()
                     return false
                 }
-                if (!_self.isSelectSprict) {
-                    getMoveScrpit()
+                // if (!_self.isSelectSprict) {
+                //     getMoveScrpit()
+                // }
+                //  修改 --- 进行边界判断， 还未渲染前先进行更改数据， 不然在物体超出屏幕后会被销毁掉
+                var gx = Mouse.gXOff(), gy = Mouse.gYOff(), movex, movey
+                movex = _self.selObj.ox + gx
+                movey = _self.selObj.oy + gy
+                if ( movex < -10) {
+                    movex = -10
                 }
-                _self.selObj.moveTo(_self.selObj.ox+Mouse.gXOff(),_self.selObj.oy+Mouse.gYOff());
+                if (movex > _self.selObj.owner.w) {
+                    movex = _self.selObj.owner.w
+                }
+                if ( movey < -10) {
+                    movey = -10
+                }
+                if (movey > _self.selObj.owner.h) {
+                    movey = _self.selObj.owner.h
+                }
+
+                _self.selObj.moveTo(movex, movey);
             }
         })
         Mouse.sDLG("up",function(e){
             if(_self.selObj!=null)
             {
                 _self.selObj.status = 0;
+                _self.selObj.c = 'yellow'
             }
             _self.isSelectSprict = false
         });

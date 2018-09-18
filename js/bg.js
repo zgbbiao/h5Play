@@ -2,7 +2,7 @@
     win[myName] = Sprite.extend({
         //重新update
         update: function () {
-            console.log(1);
+
         }
     })
     win[myName].ClassName = myName;

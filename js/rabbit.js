@@ -5,11 +5,18 @@
         // 记录上传碰撞的名字，
         preBarrierName: null,
         collidId: null,
+        box: null,
+        init: function (name) {
+            this.box = {}
+            this._super(name)
+        },
         //重新update
         update: function () {
             this._super()
-            if (this.x < -this.w * this.scaleX /6 ) {
-                this.x = -this.w * this.scaleX /6
+            // 修改---  添加盒模型，  修改边界判断  start
+            this.box = new RBBox(this.x, this.y, this.w*0.5, this.h*0.5)
+            if (this.x < -10  ) {
+                this.x = -10
             }
             if (this.x > this.owner.w - this.w * this.scaleX /2 ) {
                 this.x = this.owner.w - this.w * this.scaleX /2
@@ -21,9 +28,10 @@
                 this.y = 10
             }
             var so = this
-            if (!StickGame.selObj) {
-                StickGame.selObj = so
-            }
+            // if (!StickGame.selObj) {
+                StickGame.selObj = this
+            // }
+            // 修改---  添加盒模型，  修改边界判断  end
             var self = this;
             var sc = StickGame.sceneManager.getScene("main");
             if (!this.collidId) {
@@ -99,12 +107,13 @@
             //     y3 = pObj.y-pObj.h*0.5,
             //     x4 = pObj.x+pObj.w*0.5,
             //     y4 = pObj.y+pObj.h*0.5;
-            var  x1 = this.x-this.w*0.5 > 0 ? this.x-this.w*0.5 : this.x,
-                y1 = this.y-this.h*0.5,
+            //  修改 --  修改最小为0
+            var  x1 = this.x > 0 ? this.x: 0,
+                y1 = this.y,
                 x2 = this.x+this.w*0.5,
                 y2 = this.y+this.h*0.5,
-                x3 = pObj.x-pObj.w*0.5,
-                y3 = pObj.y-pObj.h*0.5,
+                x3 = pObj.x,
+                y3 = pObj.y,
                 x4 = pObj.x+pObj.w*0.5,
                 y4 = pObj.y+pObj.h*0.5;
             //获取相交区域
@@ -144,6 +153,16 @@
                 }
             }
         },
+        render: function (ctx) {
+            // 修改 添加盒包围
+            if ( this.box ) {
+                this.box.x = this.x
+                this.box.y = this.y
+                this.box.c = this.c || "yellow";
+                // this.box.show(ctx)
+            }
+            this._super(ctx)
+        }
     })
     win[myName].ClassName = myName;
     //注册Ball类

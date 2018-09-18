@@ -168,6 +168,7 @@
         function doDown(e)
         {
             setMBtnState(e,1);
+            setMPos(e);
             setTarget(e);
             _M.ox = e.pageX || e.touches[0].clientX;
             _M.oy = e.pageY || e.touches[0].clientY;
@@ -176,6 +177,7 @@
         function doUp(e)
         {
             setMBtnState(e,0);
+            setMPos(e);
             setTarget(e);
             _M.dlgEvent.up&&_M.dlgEvent.up(e);
         }
