@@ -14,7 +14,7 @@
         update: function () {
             this._super()
             // 修改---  添加盒模型，  修改边界判断  start
-            this.box = new RBBox(this.x, this.y, this.w*0.5, this.h*0.5)
+            // this.box = new RBBox(this.x, this.y, this.w*0.5, this.h*0.5)
             if (this.x < -10  ) {
                 this.x = -10
             }

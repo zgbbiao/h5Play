@@ -220,12 +220,14 @@
 }
 .rule-font{
     width:5.05rem;
-    overflow: hidden;
+    overflow-y: scroll !important;
     font-size:.28rem;
     font-family:FZY4JW;
     font-weight:normal;
     color:rgba(102,102,102,1);
     line-height:.48rem;
+    height: 5rem;
+    /*-webkit-overflow-scrolling:touch;*/
 }
 .down-font{
     font-size:.34rem;
@@ -272,4 +274,12 @@
 }
 .grame-count-down{
     z-index: 22;
+}
+
+.grame-pop-rule{
+    z-index: 999;
+}
+
+.z-model{
+    z-index: 1000;
 }

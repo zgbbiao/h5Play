@@ -127,12 +127,10 @@
                 // document.onclick = doClick;
                 // document.ondblick = doDBClick;
                 // document.onmousewheel = doWheel;
-
-
-                document.ontouchmove = doMove;
+                // document.ontouchmove = doMove;
+                document.addEventListener('touchmove', doMove, false)
                 document.ontouchend = doUp;
                 document.ontouchstart = doDown;
-                //
                 // touch.on(document, 'touchstart', function(ev){
                 //     doDown(ev)
                 // });
@@ -149,14 +147,17 @@
         }
         function doMove(e)
         {
-            // e.preventDefault();
-            // 判断默认行为是否可以被禁用
-            if (e.cancelable) {
-                // 判断默认行为是否已经被禁用
-                if (!e.defaultPrevented) {
-                    e.preventDefault();
-                }
+            if (!e.target.classList.contains('enbalescroll')) {
+                e.preventDefault();
+                // e.stopPropagation()
             }
+            // 判断默认行为是否可以被禁用
+            // if (e.cancelable) {
+            //     // 判断默认行为是否已经被禁用
+            //     if (!e.defaultPrevented) {
+            //         e.preventDefault();
+            //     }
+            // }
             setMPos(e);
             setTarget(e);
             if(_M.isMoveCacheEnable)
@@ -164,6 +165,7 @@
                 addToMPCache(_M.x,_M.y);
             }
             _M.dlgEvent.move&&_M.dlgEvent.move(e);
+
         }
         function doDown(e)
         {

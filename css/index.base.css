@@ -35,16 +35,6 @@ main.main{
     -webkit-overflow-scrolling: touch;
 }
 
-main.main{
-    position: fixed !important;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-}
-header.header{
-    position: fixed !important;
-}
 footer.footer{
     position: absolute;
     bottom: 0;
